@@ -20,7 +20,7 @@
   <meta name="author" content="m1n9yu3">
   <meta name="keywords" content="">
   
-  <title>csapp学习-binbomb - m1n9yu3&#39;blogs</title>
+  <title>关于 - m1n9yu3&#39;blogs</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -36,8 +36,6 @@
     
   
 
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
   
 
 
@@ -66,7 +64,7 @@
 
 
 <body>
-  <header style="height: 70vh;">
+  <header style="height: 60vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -177,46 +175,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="csapp学习-binbomb">
+            <span class="h2" id="subtitle" title="关于">
               
             </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-04-16 14:56" pubdate>
-        2021年4月16日 下午
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      746 字
-    </span>
-  
-
-  
-    
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      13
-       分钟
-    </span>
-  
-
-  
-  
-</div>
 
             
           </div>
@@ -229,109 +190,79 @@
 
   <main>
     
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          >
+          
+            <div class="about-avatar">
+              <img src="https://pic.cnblogs.com/avatar/1941728/20200514104622.png" srcset="/img/loading.gif" lazyload
+                   class="img-fluid" alt="avatar">
+            </div>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<div class="text-center">
+  <div class="about-info">
+    <div class="about-name">m1n9yu3</div>
+    <div class="about-intro">ReverseEngineer</div>
+    <div class="about-icons">
       
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">csapp学习-binbomb</h1>
-            
-            <div class="markdown-body">
-              <p>就说，有 6 关，每关都不一样那种， 然后自己慢慢整出来就行</p>
-<p>给了一个 c 代码和 elf 可执行程序</p>
-<p>/*************************************************************************** * Dr. Evil’s Insidious Bomb, Version 1.1 * Copyright 2011, Dr. Evil Incorporated. All rights reserved. * * LICENSE: * * Dr. Evil Incorporated (the PERPETRATOR) hereby grants you (the * VICTIM) explicit permission to use this bomb (the BOMB).  This is a * time limited license, which expires on the death of the VICTIM. * The PERPETRATOR takes no responsibility for damage, frustration, * insanity, bug-eyes, carpal-tunnel syndrome, loss of sleep, or other * harm to the VICTIM.  Unless the PERPETRATOR wants to take credit, * that is.  The VICTIM may not distribute this bomb source code to * any enemies of the PERPETRATOR.  No VICTIM may debug, * reverse-engineer, run “strings” on, decompile, decrypt, or use any * other technique to gain knowledge of and defuse the BOMB.  BOMB * proof clothing may not be worn when handling this program.  The * PERPETRATOR will not apologize for the PERPETRATOR’s poor sense of * humor.  This license is null and void where the BOMB is prohibited * by law. ***************************************************************************/ #include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; #include “support.h” #include “phases.h” /*  * Note to self: Remember to erase this file so my victims will have no * idea what is going on, and so they will all blow up in a * spectaculary fiendish explosion. – Dr. Evil  */ FILE *infile; int main(int argc, char *argv[]) {    char <em>input;     /</em> Note to self: remember to port this bomb to Windows and put a      * fantastic GUI on it. <em>/     /</em> When run with no arguments, the bomb reads its input lines      * from standard input. <em>/    if (argc == 1) {   infile = stdin;    }      /</em> When run with one argument <file>, the bomb reads from <file>      * until EOF, and then switches to standard input. Thus, as you      * defuse each phase, you can add its defusing string to <file> and     * avoid having to retype it. <em>/    else if (argc == 2) { if (!(infile = fopen(argv[1], “r”))) {     printf(“%s: Error: Couldn’t open %s\n”, argv[0], argv[1]);     exit(8); }    }     /</em> You can’t call the bomb with more than 1 command line argument. <em>/    else { printf(“Usage: %s [<input_file>]\n”, argv[0]); exit(8);    }     /</em> Do all sorts of secret stuff that makes the bomb harder to defuse. <em>/    initialize_bomb();     printf(“Welcome to my fiendish little bomb. You have 6 phases with\n”);    printf(“which to blow yourself up. Have a nice day!\n”);     /</em> Hmm…  Six phases must be more secure than one phase! <em>/    input = read_line();             /</em> Get input                   <em>/    phase_1(input);                  /</em> Run the phase               <em>/    phase_defused();                 /</em> Drat!  They figured it out!                   * Let me know how they did it. <em>/    printf(“Phase 1 defused. How about the next one?\n”);     /</em> The second phase is harder.  No one will ever figure out     * how to defuse this… <em>/    input = read_line();    phase_2(input);    phase_defused();    printf(“That’s number 2.  Keep going!\n”);     /</em> I guess this is too easy so far.  Some more complex code will     * confuse people. <em>/    input = read_line();    phase_3(input);    phase_defused();    printf(“Halfway there!\n”);     /</em> Oh yeah?  Well, how good is your math?  Try on this saucy problem! <em>/    input = read_line();    phase_4(input);    phase_defused();    printf(“So you got that one.  Try this one.\n”);        /</em> Round and ‘round in memory we go, where we stop, the bomb blows! <em>/    input = read_line();    phase_5(input);    phase_defused();    printf(“Good work!  On to the next…\n”);     /</em> This phase will never be used, since no one will get past the     * earlier ones.  But just in case, make this one extra hard. <em>/    input = read_line();    phase_6(input);    phase_defused();     /</em> Wow, they got it!  But isn’t something… missing?  Perhaps     * something they overlooked?  Mua ha ha ha ha! */        return 0; }</p>
-<p><strong>第一关:</strong>  </p>
-<p>字符串比较</p>
-<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210416145703.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p>Border relations with Canada have never been better.</p>
-<p><strong>第二关:</strong></p>
-<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210416145708.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p><strong>第三关:</strong></p>
-<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210416145719.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p>如代码所示 :   0 207 是一组  1 311 是一组 ， 依次递推，拿出一组即可</p>
-<p><strong>第四关:</strong></p>
-<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210416145732.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210416145736.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p>一开始，我真以为是递归函数，后来我才发现，我太年轻了， </p>
-<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210416145739.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p>所以，这里 的答案应该是 </p>
-<p>7 0</p>
-<p><strong>第五关:</strong></p>
-<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210416145742.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p># coding = utf-8 table = ‘maduiersnfotvbyl’ s = “flyers” flag = ‘’ for i in s:    flag += chr(96 + table.index(i))     print(flag)        </p>
-<p>这里 96 要符合  &amp;0xf = 0 </p>
-<p>ionefg  即可</p>
-<p><strong>剩下的慢慢整</strong></p>
-<p>2021.4.16  还差两关</p>
-<p>第六关和  boss 关</p>
-<p>、</p>
-
-            </div>
-            <hr>
-            <div>
-              <div class="post-metas mb-3">
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/csapp/">csapp</a>
-                    
-                  </div>
-                
-              </div>
-              
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
-              
-              
-                <div class="post-prevnext">
-                  <article class="post-prev col-6">
-                    
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2021/04/16/hello-world/">
-                        <span class="hidden-mobile">Hello World</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
+        
+        
+        
+        <a target="_blank" rel="noopener" href="https://github.com/m1n9yu3" class="
+           hint--bottom hint--rounded"
+           aria-label=GitHub
+        >
+          <i class="iconfont icon-github-fill" aria-hidden="true"></i>
+          
+        </a>
+      
+        
+        
+        
+        <a target="_blank" rel="noopener" href="https://douban.com" class="
+           hint--bottom hint--rounded"
+           aria-label=豆瓣
+        >
+          <i class="iconfont icon-douban-fill" aria-hidden="true"></i>
+          
+        </a>
+      
+        
+        
+        
+        <a href="javascript:;" class="qr-trigger
+           "
+           
+        >
+          <i class="iconfont icon-wechat-fill" aria-hidden="true"></i>
+          
+            <img class="qr-img" src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="qrcode" />
+          
+        </a>
+      
     </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-      </div>
-    
   </div>
 </div>
 
-<!-- Custom -->
+<article class="about-content page-content mt-5">
+  <div class="markdown-body">
+    <p>这里写关于页的正文，支持 Markdown, HTML</p>
 
+  </div>
 
+  
+</article>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     
 
     
@@ -436,11 +367,7 @@
 
 
 
-  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
 
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
 
 
 
