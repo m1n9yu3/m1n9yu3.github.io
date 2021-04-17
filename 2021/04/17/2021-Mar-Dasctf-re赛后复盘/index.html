@@ -244,7 +244,10 @@
             <h1 style="display: none">2021 Mar-Dasctf re赛后复盘</h1>
             
             <div class="markdown-body">
-              <p>这次比赛， 没有向以前一样爆零了，就很舒服</p>
+              <blockquote>
+<p>本文首发于看雪论坛</p>
+</blockquote>
+<p>这次比赛， 没有向以前一样爆零了，就很舒服</p>
 <p>赛后官方提供了复盘，就用 复盘一下，写一下wp</p>
 <h2 id="drinkSomeTea"><a href="#drinkSomeTea" class="headerlink" title="drinkSomeTea"></a>drinkSomeTea</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210417203842.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>主函数逻辑</p>
@@ -255,7 +258,7 @@
 
 
 <p>去花指令</p>
-<p><img src="C:\Users\m1n9yu3\AppData\Local\YNote\data\weixinobU7VjphovlVs_X65yCMfxvZcB-A\9882037e740e48f389a72cb4a2587738\clipboard.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210417204942.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>明显的一个 tea 加密</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> *__cdecl <span class="hljs-title">sub_4010A0</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *a1, _DWORD *a2)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">int</span> *result; <span class="hljs-comment">// eax</span><br>  <span class="hljs-keyword">int</span> v3; <span class="hljs-comment">// [esp+Ch] [ebp-14h]</span><br>  <span class="hljs-keyword">int</span> i; <span class="hljs-comment">// [esp+14h] [ebp-Ch]</span><br>  <span class="hljs-keyword">int</span> v5; <span class="hljs-comment">// [esp+18h] [ebp-8h]</span><br>  <span class="hljs-keyword">int</span> v6; <span class="hljs-comment">// [esp+1Ch] [ebp-4h]</span><br><br>  v5 = <span class="hljs-number">0</span>;<br>  v6 = a1[<span class="hljs-number">1</span>];<br>  v3 = *a1;<br>  <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; ++i )<br>  &#123;<br>    v5 -= <span class="hljs-number">0x61C88647</span>;<br>    v3 += (a2[<span class="hljs-number">1</span>] + (v6 &gt;&gt; <span class="hljs-number">5</span>)) ^ (v5 + v6) ^ (*a2 + <span class="hljs-number">16</span> * v6);<br>    v6 += (a2[<span class="hljs-number">3</span>] + (v3 &gt;&gt; <span class="hljs-number">5</span>)) ^ (v5 + v3) ^ (a2[<span class="hljs-number">2</span>] + <span class="hljs-number">16</span> * v3);<br>  &#125;<br>  a1[<span class="hljs-number">1</span>] = v6;<br>  result = a1;<br>  *a1 = v3;<br>  <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
 
