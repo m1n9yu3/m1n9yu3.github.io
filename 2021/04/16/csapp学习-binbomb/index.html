@@ -308,20 +308,19 @@
 <p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210422142227.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>所以直接 ， 在第四关输入后面加一个 字符串 即可打开 boss 关卡</p>
 <p>二叉树逆向 </p>
-<p><img src="C:\Users\m1n9yu3\AppData\Local\YNote\data\weixinobU7VjphovlVs_X65yCMfxvZcB-A\a08ff26fdb3b43eebffccd551a3e41df\clipboard.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210422142557.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>一个递归函数， 计算数据， 是否满足条件</p>
-<p><img src="C:\Users\m1n9yu3\AppData\Local\YNote\data\weixinobU7VjphovlVs_X65yCMfxvZcB-A\cd02307d9e9f453a9f625ba7496c0ac7\clipboard.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210422142603.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>这一题 ， 第一眼看到就是那啥， 直接爆破</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding=utf-8</span><br><span class="hljs-keyword">import</span> subprocess<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fuck</span>(<span class="hljs-params">num</span>):</span><br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;test1.txt&#x27;</span>, mode=<span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;test.txt&#x27;</span>, mode=<span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> f1:<br>            content = f1.read()<br>        f.write(content + <span class="hljs-string">&#x27;\n&#x27;</span> + <span class="hljs-built_in">str</span>(num))<br>    s = subprocess.Popen([<span class="hljs-string">&#x27;./bomb&#x27;</span>,<span class="hljs-string">&#x27;test1.txt&#x27;</span>], stdout=subprocess.PIPE)<br>    content = s.stdout.read().decode()<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;You&#x27;ve defused the secret&quot;</span> <span class="hljs-keyword">in</span> content:<br>        <span class="hljs-built_in">print</span>(num)<br>        <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000</span>):<br>    fuck(i)<br></code></pre></td></tr></table></figure>
 
 
 
 <p>最后比较气人的是， 我这边 输入三位，其实程序只能读到 两位数， 还好答案只是两位数， 勉强过了。</p>
-<p><img src="C:\Users\m1n9yu3\AppData\Local\YNote\data\weixinobU7VjphovlVs_X65yCMfxvZcB-A\165ab2f9d1dc4f689dd75a968be28b7f\clipboard.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210422142607.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p>答案是  20    或者 22</p>
-<p><img src="C:\Users\m1n9yu3\AppData\Local\YNote\data\weixinobU7VjphovlVs_X65yCMfxvZcB-A\47836208fa6d4d738aa53b32380291ae\clipboard.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p><strong>总结</strong></p>
-<p>二进制炸弹锻炼了 反汇编能力， 也反映出了我自身的不足， 沉不住气， 不能静下心来 阅读反汇编代码。 </p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210422142613.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>二进制炸弹锻炼了 反汇编能力， 也反映出了我自身的不足， 沉不住气， 不能静下心来 阅读反汇编代码。 </p>
 <p>总结一句话，懒狗是我没错了</p>
 
             </div>
