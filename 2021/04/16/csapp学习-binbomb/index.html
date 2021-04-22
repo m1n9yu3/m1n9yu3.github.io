@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      826 字
+      1.6k 字
     </span>
   
 
@@ -211,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      15
+      27
        分钟
     </span>
   
@@ -276,6 +276,53 @@
 <blockquote>
 <p>好吧，我承认，后面的超出了我的能力范围</p>
 </blockquote>
+<p><strong>2021.4.22 补充</strong></p>
+<h2 id="第六关"><a href="#第六关" class="headerlink" title="第六关"></a>第六关</h2><p>是一个 单向链表</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">LinkedList</span>&#123;</span><br>  <span class="hljs-keyword">int</span> value;<br>  <span class="hljs-keyword">int</span> num;<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">LinkedList</span>* <span class="hljs-title">next</span>;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>ida  套上结构体，  进行逆向， 发现有的地方还是 没反编译明白， 这就很难办了。</p>
+<p>直接  读汇编， 我本身是很抗拒读汇编的， 太依赖 ida 的f5了， 哭了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">__int64 __fastcall <span class="hljs-title">phase_6</span><span class="hljs-params">(__int64 a1)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">int</span> *v1; <span class="hljs-comment">// r13</span><br>  <span class="hljs-keyword">int</span> v2; <span class="hljs-comment">// er12</span><br>  <span class="hljs-keyword">int</span> v3; <span class="hljs-comment">// ebx</span><br>  <span class="hljs-keyword">int</span> *v4; <span class="hljs-comment">// rax</span><br>  <span class="hljs-keyword">unsigned</span> __int64 i; <span class="hljs-comment">// rsi</span><br>  LinkedList *v6; <span class="hljs-comment">// rdx</span><br>  <span class="hljs-keyword">int</span> v7; <span class="hljs-comment">// eax</span><br>  <span class="hljs-keyword">int</span> v8; <span class="hljs-comment">// ecx</span><br>  LinkedList *v9; <span class="hljs-comment">// rbx</span><br>  LinkedList v10; <span class="hljs-comment">// rax</span><br>  LinkedList *j; <span class="hljs-comment">// rcx</span><br>  <span class="hljs-keyword">int</span> v12; <span class="hljs-comment">// ebp</span><br>  __int64 result; <span class="hljs-comment">// rax</span><br>  <span class="hljs-keyword">int</span> v14[<span class="hljs-number">6</span>]; <span class="hljs-comment">// [rsp+0h] [rbp-78h] BYREF</span><br>  <span class="hljs-keyword">int</span> v15; <span class="hljs-comment">// [rsp+18h] [rbp-60h] BYREF</span><br>  LinkedList v16; <span class="hljs-comment">// [rsp+20h] [rbp-58h] BYREF</span><br>  <span class="hljs-keyword">char</span> v17; <span class="hljs-comment">// [rsp+50h] [rbp-28h] BYREF</span><br><br>  v1 = v14;<br>  <span class="hljs-built_in">read_six_numbers</span>(a1, v14);<br>  v2 = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">while</span> ( <span class="hljs-number">1</span> )                                   <span class="hljs-comment">// 判断 是否有没有 重复 数字</span><br>  &#123;<br>    <span class="hljs-keyword">if</span> ( (*v1 - <span class="hljs-number">1</span>) &gt; <span class="hljs-number">5</span> )<br>      <span class="hljs-built_in">explode_bomb</span>();<br>    <span class="hljs-keyword">if</span> ( ++v2 == <span class="hljs-number">6</span> )<br>      <span class="hljs-keyword">break</span>;<br>    v3 = v2;<br>    <span class="hljs-keyword">do</span><br>    &#123;<br>      <span class="hljs-keyword">if</span> ( *v1 == v14[v3] )<br>        <span class="hljs-built_in">explode_bomb</span>();<br>      ++v3;<br>    &#125;<br>    <span class="hljs-keyword">while</span> ( v3 &lt;= <span class="hljs-number">5</span> );<br>    ++v1;<br>  &#125;<br>  v4 = v14;                                     <span class="hljs-comment">// 一个加密， 7- 真正的位置 = 应输入的位置</span><br>  <span class="hljs-keyword">do</span><br>  &#123;<br>    *v4 = <span class="hljs-number">7</span> - *v4;<br>    ++v4;<br>  &#125;<br>  <span class="hljs-keyword">while</span> ( v4 != &amp;v15 );<br>  <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0LL</span>; i != <span class="hljs-number">24</span>; i += <span class="hljs-number">4LL</span> )            <span class="hljs-comment">// 按照输入的每个数字进行排序</span><br>  &#123;<br>    v8 = v14[i / <span class="hljs-number">4</span>];<br>    <span class="hljs-keyword">if</span> ( v8 &lt;= <span class="hljs-number">1</span> )<br>    &#123;<br>      v6 = &amp;node1;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>      v7 = <span class="hljs-number">1</span>;<br>      v6 = &amp;node1;<br>      <span class="hljs-keyword">do</span><br>      &#123;<br>        v6 = v6-&gt;next;<br>        ++v7;<br>      &#125;<br>      <span class="hljs-keyword">while</span> ( v7 != v8 );<br>    &#125;<br>    *(&amp;v16.value + <span class="hljs-number">2</span> * i) = v6;<br>  &#125;<br>  v9 = *&amp;v16.value;<br>  *&amp;v10.value = &amp;v16.next;<br>  <span class="hljs-keyword">for</span> ( j = *&amp;v16.value; ; j = v10.next )       <span class="hljs-comment">// 链表重新排序</span><br>  &#123;<br>    v10.next = **&amp;v10.value;<br>    j-&gt;next = **&amp;v10.value;<br>    *&amp;v10.value += <span class="hljs-number">8LL</span>;<br>    <span class="hljs-keyword">if</span> ( *&amp;v10.value == &amp;v17 )<br>      <span class="hljs-keyword">break</span>;<br>  &#125;<br>  v10.next-&gt;next = <span class="hljs-number">0LL</span>;<br>  v12 = <span class="hljs-number">5</span>;<br>  <span class="hljs-keyword">do</span>                                            <span class="hljs-comment">// 链表数值比较， 对链表的数值进行比较， 从大到小</span><br>  &#123;<br>    result = v9-&gt;next-&gt;value;<br>    <span class="hljs-keyword">if</span> ( v9-&gt;value &lt; result )<br>      <span class="hljs-built_in">explode_bomb</span>();<br>    v9 = v9-&gt;next;<br>    --v12;<br>  &#125;<br>  <span class="hljs-keyword">while</span> ( v12 );<br>  <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>链表数据</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210422142215.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>0x14c:1    0xa8:2   0x39c:3 0x283:4  0x1dd:5   0x1bb:6</p>
+<p>从大到小排序后</p>
+<p>3 4 5 6 1 2</p>
+<p>经过  y=7-x  加密后， 最终答案为</p>
+<p>4 3 2 1 6 5</p>
+<p>所以前六关的答案是</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs tex">Border relations with Canada have never been better.<br>1 2 4 8 16 32<br>1 311<br>7 0 <br>ionefg<br>4 3 2 1 6 5<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="隐藏关卡"><a href="#隐藏关卡" class="headerlink" title="隐藏关卡"></a>隐藏关卡</h2><p>boss   好激动</p>
+<p>这一关的打开方式很奇葩， 是一个写死的地址， 格式化字符串，判断是否有特定的字符串 </p>
+<p>这个地址，我调试了一下，发现 和第四关的数据非常的像</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210422142223.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>测试了一下，发现 ， 写死的地址就是第四关的地址， </p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210422142227.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>所以直接 ， 在第四关输入后面加一个 字符串 即可打开 boss 关卡</p>
+<p>二叉树逆向 </p>
+<p><img src="C:\Users\m1n9yu3\AppData\Local\YNote\data\weixinobU7VjphovlVs_X65yCMfxvZcB-A\a08ff26fdb3b43eebffccd551a3e41df\clipboard.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>一个递归函数， 计算数据， 是否满足条件</p>
+<p><img src="C:\Users\m1n9yu3\AppData\Local\YNote\data\weixinobU7VjphovlVs_X65yCMfxvZcB-A\cd02307d9e9f453a9f625ba7496c0ac7\clipboard.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>这一题 ， 第一眼看到就是那啥， 直接爆破</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding=utf-8</span><br><span class="hljs-keyword">import</span> subprocess<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fuck</span>(<span class="hljs-params">num</span>):</span><br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;test1.txt&#x27;</span>, mode=<span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;test.txt&#x27;</span>, mode=<span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> f1:<br>            content = f1.read()<br>        f.write(content + <span class="hljs-string">&#x27;\n&#x27;</span> + <span class="hljs-built_in">str</span>(num))<br>    s = subprocess.Popen([<span class="hljs-string">&#x27;./bomb&#x27;</span>,<span class="hljs-string">&#x27;test1.txt&#x27;</span>], stdout=subprocess.PIPE)<br>    content = s.stdout.read().decode()<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;You&#x27;ve defused the secret&quot;</span> <span class="hljs-keyword">in</span> content:<br>        <span class="hljs-built_in">print</span>(num)<br>        <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000</span>):<br>    fuck(i)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>最后比较气人的是， 我这边 输入三位，其实程序只能读到 两位数， 还好答案只是两位数， 勉强过了。</p>
+<p><img src="C:\Users\m1n9yu3\AppData\Local\YNote\data\weixinobU7VjphovlVs_X65yCMfxvZcB-A\165ab2f9d1dc4f689dd75a968be28b7f\clipboard.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>答案是  20    或者 22</p>
+<p><img src="C:\Users\m1n9yu3\AppData\Local\YNote\data\weixinobU7VjphovlVs_X65yCMfxvZcB-A\47836208fa6d4d738aa53b32380291ae\clipboard.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>总结</strong></p>
+<p>二进制炸弹锻炼了 反汇编能力， 也反映出了我自身的不足， 沉不住气， 不能静下心来 阅读反汇编代码。 </p>
+<p>总结一句话，懒狗是我没错了</p>
 
             </div>
             <hr>
