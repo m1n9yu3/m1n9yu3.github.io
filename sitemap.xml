@@ -46,7 +46,7 @@
 
   <url>
     <loc>http://m1n9yu3.github.io/</loc>
-    <lastmod>2021-04-22</lastmod>
+    <lastmod>2021-04-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -54,14 +54,14 @@
   
   <url>
     <loc>http://m1n9yu3.github.io/tags/ctf/</loc>
-    <lastmod>2021-04-22</lastmod>
+    <lastmod>2021-04-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://m1n9yu3.github.io/tags/csapp/</loc>
-    <lastmod>2021-04-22</lastmod>
+    <lastmod>2021-04-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
