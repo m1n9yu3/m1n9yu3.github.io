@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://m1n9yu3.github.io/2021/04/25/gwctf-2019-babyvm%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/</loc>
+    
+    <lastmod>2021-04-25</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://m1n9yu3.github.io/2021/04/16/csapp%E5%AD%A6%E4%B9%A0-binbomb/</loc>
     
     <lastmod>2021-04-22</lastmod>
@@ -46,7 +53,7 @@
 
   <url>
     <loc>http://m1n9yu3.github.io/</loc>
-    <lastmod>2021-04-24</lastmod>
+    <lastmod>2021-04-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -54,14 +61,14 @@
   
   <url>
     <loc>http://m1n9yu3.github.io/tags/ctf/</loc>
-    <lastmod>2021-04-24</lastmod>
+    <lastmod>2021-04-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://m1n9yu3.github.io/tags/csapp/</loc>
-    <lastmod>2021-04-24</lastmod>
+    <lastmod>2021-04-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
