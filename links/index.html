@@ -245,7 +245,45 @@
 </div>
 
 
+  <!-- Custom -->
+  <div class="custom mx-auto">
+    <hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p><ul><li>博客名：Fluid</li><li>简介：Fluid 主题官方博客</li><li>链接：https://hexo.fluid-dev.com</li><li>图片：https://hexo.fluid-dev.com/img/favicon.png</li></ul>
+  </div>
 
+
+
+  <!-- Comments -->
+  <article class="comments" id="comments" lazyload>
+    
+    
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.lazyComments('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '14e435303cab5f52c7b5',
+          clientSecret: 'a56e48445272aa2d2a1f8c893248284f195c4d4e',
+          repo: 'm1n9yu3_blog_gitalk',
+          owner: 'm1n9yu3',
+          admin: "m1n9yu3",
+          id: '38687fdbcd50268b872dd8c493f739e6',
+          language: 'zh-CN',
+          labels: ["Gitalk","comment"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false,
+          proxy: ''
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
 
 
               </div>
