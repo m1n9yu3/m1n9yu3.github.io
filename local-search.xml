@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>NepCTF2023-九龙拉棺wp</title>
+    <link href="/2023/08/14/NepCTF2023-%E4%B9%9D%E9%BE%99%E6%8B%89%E6%A3%BAwp/"/>
+    <url>/2023/08/14/NepCTF2023-%E4%B9%9D%E9%BE%99%E6%8B%89%E6%A3%BAwp/</url>
+    
+    <content type="html"><![CDATA[<p>综合难度: easy<br>考点:多线程，父子进程，共享内存，硬件断点检测，int3断点反调试，xtea加密算法.</p><h1 id="出题思路-解题思路-杂记"><a href="#出题思路-解题思路-杂记" class="headerlink" title="出题思路/解题思路/杂记:"></a>出题思路/解题思路/杂记:</h1><p>本题使用了8个线程+1个新的进程，实现了flag字符串的验证。</p><blockquote><p>看似是 8 个线程，实则8个线程均通过一个变量控制，所以使用的是一个线程。只要跟随变量(nCurLevel)的变化，走到相应的线程，即可了解程序逻辑。</p></blockquote><ul><li>4个线程用来解密子进程exe,.分别使用 Rc4 -&gt; Base32 -&gt; Base58 -&gt; Base64. 解密。因为使用的是线程，只能通过</li><li>1个线程用于内存写入exe文件，并执行子进程。</li><li>1个线程用于反调试<ul><li>反调试动态读取.text(第一个段)并通过累加的方式，不断读取对比的方式，来实现反调试。如果程序一开始就存在断点，则该反调试无效，若在调试中突然增加int3断点，则该程序直接退出。</li></ul></li><li>1个线程用于给输入的字符串加密，(部分字符， 使用了 xtea算法。若对比失败，则直接退出经常，不经过最后的输出验证结果。</li><li>1个线程用于获取最终的对比结果。用来判断是否验证成功。</li></ul><h2 id="检测硬件断点"><a href="#检测硬件断点" class="headerlink" title="检测硬件断点"></a>检测硬件断点</h2><p>大部分的线程中穿插着检查硬件断点的检测。</p><blockquote><p>读取当前线程的Context, 查看Dr7 是否为一个正常值。若不为正常的值，则判断该线程设置了硬件断点。会尝试使用SetThreadContext 来设置Dr7 取消硬件断点。若无法取消，则直接退出进程。</p></blockquote><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141915764.png"></p><h2 id="Main-函数"><a href="#Main-函数" class="headerlink" title="Main 函数:"></a>Main 函数:</h2><p>首先提权，需要一些权限。<br><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141915001.png"></p><p>然后启动8个线程。</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141916267.png"></p><p>紧接着接收用户输入字符串</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141916212.png"></p><p>将用户输入字符串放入 myShareMemory 中。</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141916504.png"></p><p>初始化当前应执行线程ID.使用Wait等待线程执行完毕。<br><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141916984.png"></p><h3 id="用户输入字符的存储形式解释"><a href="#用户输入字符的存储形式解释" class="headerlink" title="用户输入字符的存储形式解释"></a>用户输入字符的存储形式解释</h3><p>myShareMemory 作为保存用户输入数据的地方，为了实现双进程间的数据交换，我直接使用的CreateFileMapping。并且通过 随机数来取一个随机偏移存放用户输入字符串。</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141918397.png"></p><p>并且初始化操作先于 main 函数执行。<br><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141920292.png"></p><h2 id="导出子进程"><a href="#导出子进程" class="headerlink" title="导出子进程"></a>导出子进程</h2><p>了解完子进程的加密算法，可以找到原始数据导出，即可快速获得子进程</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141921166.png"></p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141921731.png"></p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141922172.png"></p><h2 id="子进程解析"><a href="#子进程解析" class="headerlink" title="子进程解析"></a>子进程解析</h2><p>子进程使用纯汇编编写。</p><h3 id="获取Kernel32dll的基地址"><a href="#获取Kernel32dll的基地址" class="headerlink" title="获取Kernel32dll的基地址"></a>获取Kernel32dll的基地址</h3><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141923381.png"></p><h3 id="获取Kernel32dll的基本信息"><a href="#获取Kernel32dll的基本信息" class="headerlink" title="获取Kernel32dll的基本信息"></a>获取Kernel32dll的基本信息</h3><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141923928.png"></p><h3 id="遍历Kernel32-dll的导出函数名称表"><a href="#遍历Kernel32-dll的导出函数名称表" class="headerlink" title="遍历Kernel32.dll的导出函数名称表"></a>遍历Kernel32.dll的导出函数名称表</h3><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141924373.png"></p><p>找到最终的函数地址:<br><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141924729.png"></p><h3 id="子进程验证部分"><a href="#子进程验证部分" class="headerlink" title="子进程验证部分"></a>子进程验证部分</h3><p>子进程主要 取MapViewOfFile, 获取父进程的共享内存。 Check2 函数去检查输入是否正确。</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141925327.png"></p><p>Check2 同样使用 XTEA算法进行加密后比较，注意长度，0x40. 部分长度与 Check1主进程的检查线程数据重复，需要筛选一下。(故意设置的)</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141925546.png"></p><p>如果验证成功，会遍历主进程的内存，将结果写回到主进程。(为了增加难度).</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141925834.png"></p><p>最后清理变量。</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141926021.png"></p><h2 id="编写解密函数（XTEA）"><a href="#编写解密函数（XTEA）" class="headerlink" title="编写解密函数（XTEA）:"></a>编写解密函数（XTEA）:</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141926400.png"></p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141926159.png"></p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202308141926601.png"></p><p>取Check2的 0x40 + Check1 的 最后16位即为 最后的flag。<br>NepCTF{c9cdnwdi3iu41m0pv3x7kllzu8pdq6mt9n2nwjdp6kat8ent4dhn5r158iz2f0cmr0u7yxyq}</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h2><p>因为主进程使用的Release 模式，导致主进程代码被大量优化，可能对新手不太友好。不过我相信认真逆向下来的话，一定能学到不少东西。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>逆向工程</tag>
+      
+      <tag>ida</tag>
+      
+      <tag>杂记</tag>
+      
+      <tag>出题</tag>
+      
+      <tag>writeup</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2023/06/19/hello-world/"/>
     <url>/2023/06/19/hello-world/</url>

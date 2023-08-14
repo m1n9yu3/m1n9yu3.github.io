@@ -187,6 +187,61 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/08/14/NepCTF2023-%E4%B9%9D%E9%BE%99%E6%8B%89%E6%A3%BAwp/">NepCTF2023-九龙拉棺wp</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/08/14/NepCTF2023-%E4%B9%9D%E9%BE%99%E6%8B%89%E6%A3%BAwp/">
+          
+          
+            
+          
+          综合难度: easy考点:多线程，父子进程，共享内存，硬件断点检测，int3断点反调试，xtea加密算法.
+出题思路/解题思路/杂记:本题使用了8个线程+1个新的进程，实现了flag字符串的验证。
+
+看似是 8 个线程，实则8个线程均通过一个变量控制，所以使用的是一个线程。只要跟随变量(nCurLevel)的变化，走到相应的线程，即可了解程序逻辑。
+
+
+4个线程用来解密子进程exe,.分别使用 R
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-08-14 16:00" pubdate>
+              2023-08-14
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">逆向工程</a>
+            
+              <a href="/tags/ida/">ida</a>
+            
+              <a href="/tags/%E6%9D%82%E8%AE%B0/">杂记</a>
+            
+              <a href="/tags/%E5%87%BA%E9%A2%98/">出题</a>
+            
+              <a href="/tags/writeup/">writeup</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/06/19/hello-world/">Hello World</a>
       </h1>
 
@@ -642,61 +697,6 @@ main 函数有五个动作
               <a href="/tags/ida/">ida</a>
             
               <a href="/tags/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/">样本分析</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/10/20/sql-labs%E5%AD%A6%E4%B9%A0/">sql-labs学习</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/20/sql-labs%E5%AD%A6%E4%B9%A0/">
-          
-          
-            
-          
-          sqli-labs 通关笔记
-
-sql 注入漏洞 是因为 程序员在开发的时候，没有对数据库查询语句中用户输入字符进行严格过滤导致
-
-字符型注入less 1%23 为 #号的 url编码
-
-判断闭合符号
-http://127.0.0.1/sqli-labs/Less-1/?id=1&#39;
-
-测试行数
-http://127.0.0.1/sqli-labs/Less-1/?id=1&#39; ord
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-10-20 21:40" pubdate>
-              2021-10-20
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/study/">study</a>
-            
-              <a href="/tags/web/">web</a>
-            
-              <a href="/tags/sql%E6%B3%A8%E5%85%A5/">sql注入</a>
             
           </div>
         
