@@ -41,9 +41,9 @@
     
     <tags>
       
-      <tag>逆向工程</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>逆向工程</tag>
       
     </tags>
     
@@ -62,9 +62,9 @@
     
     <tags>
       
-      <tag>逆向工程</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>逆向工程</tag>
       
     </tags>
     
@@ -106,9 +106,9 @@
     
     <tags>
       
-      <tag>逆向工程</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>逆向工程</tag>
       
     </tags>
     
@@ -127,9 +127,9 @@
     
     <tags>
       
-      <tag>逆向工程</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>逆向工程</tag>
       
       <tag>angr</tag>
       
@@ -196,11 +196,11 @@
     
     <tags>
       
-      <tag>study</tag>
-      
       <tag>逆向工程</tag>
       
       <tag>ida</tag>
+      
+      <tag>study</tag>
       
       <tag>样本分析</tag>
       
@@ -234,25 +234,6 @@
   
   
   <entry>
-    <title>2021年度国家网络宣传周本市线下赛wp</title>
-    <link href="/2021/10/17/2021%E5%B9%B4%E5%BA%A6%E5%9B%BD%E5%AE%B6%E7%BD%91%E7%BB%9C%E5%AE%A3%E4%BC%A0%E5%91%A8%E6%9C%AC%E5%B8%82%E7%BA%BF%E4%B8%8B%E8%B5%9Bwp/"/>
-    <url>/2021/10/17/2021%E5%B9%B4%E5%BA%A6%E5%9B%BD%E5%AE%B6%E7%BD%91%E7%BB%9C%E5%AE%A3%E4%BC%A0%E5%91%A8%E6%9C%AC%E5%B8%82%E7%BA%BF%E4%B8%8B%E8%B5%9Bwp/</url>
-    
-    <content type="html"><![CDATA[<p>首先没逆向， 差评, 三个web 全不会</p><h1 id="base"><a href="#base" class="headerlink" title="base"></a>base</h1><p>base.jpg 文件尾部有段 base32 编码的字符</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171829017.png" alt="image-20211017182857974"></p><p>弃掉前两位字节，拿去 base32 解码</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171830539.png" alt="image-20211017183049471"></p><p>flag{wlabase_very@gold}</p><h1 id="cooltailor"><a href="#cooltailor" class="headerlink" title="cooltailor"></a>cooltailor</h1><p>压缩包爆破  Advanced Archive Password Recovery</p><p>四位数字爆破， 得到 1314</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171834531.png" alt="image-20211017183425463"></p><p>尝试更改图片高度</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171836888.png" alt="image-20211017183613804"></p><p>拿到 二维码， 改到 2500 拿到完整二维码</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171837863.png" alt="image-20211017183709778"></p><p>再用 qr_research 扫码  </p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171838740.png" alt="image-20211017183809657"></p><p>getflag</p><p>flag{2jn_CTF_ea_do_it!!!}</p><h1 id="morse"><a href="#morse" class="headerlink" title="morse"></a>morse</h1><p>audacity  打开音频，发现频谱类似 摩斯电码，  长的为 -  短的 为  .  空格转换为空格</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171840704.png" alt="image-20211017184002604"></p><p>手动转换， 拿到:</p><p>..- -. .. -.-. — -.. . .-.-.- .—- —– ..— .-.-.- .—- —– —.. .-.-.- —-. –… .-.-.- .—- —– …– .-.-.- .—- ..— …– .-.-.- .—- —– —-. .-.-.- ….- —.. .-.-.- .—- .—- ….- .-.-.- .—- .—- ….. .-.-.- .—- —– .—- .-.-.- —-. —-. .-.-.- .—- .—- .—- .-.-.- .—- —– —- .-.-.- .—- —– .—- .-.-.- .—- .—- —-. .-.-.- –… —-. .-.-.- .—- .—- .—- ….- .-.-.- .—- —– —.. .-.-.- .—- —– —- .-.-.- .—- ..— ….. .-.-.-</p><p>python脚本转换下</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span><br><span class="hljs-comment"># coding = utf-8</span><br><br>s = <span class="hljs-string">&#x27;..- -. .. -.-. --- -.. . .-.-.- .---- ----- ..--- .-.-.- .---- ----- ---.. .-.-.- ----. --... .-.-.- .---- ----- ...-- .-.-.- .---- ..--- ...-- .-.-.- .---- ----- ----. .-.-.- ....- ---.. .-.-.- .---- .---- ....- .-.-.- .---- .---- ..... .-.-.- .---- ----- .---- .-.-.- ----. ----. .-.-.- .---- .---- .---- .-.-.- .---- ----- ---- .-.-.- .---- ----- .---- .-.-.- .---- .---- ----. .-.-.- --... ----. .-.-.- .---- .---- .---- ....- .-.-.- .---- ----- ---.. .-.-.- .---- ----- ---- .-.-.- .---- ..--- ..... .-.-.-&#x27;</span><br><br><br>MorseList = &#123;<br>    <span class="hljs-string">&quot;.-&quot;</span>: <span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;-...&quot;</span>: <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;-.-.&quot;</span>: <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;-..&quot;</span>: <span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-string">&quot;.&quot;</span>: <span class="hljs-string">&quot;E&quot;</span>, <span class="hljs-string">&quot;..-.&quot;</span>: <span class="hljs-string">&quot;F&quot;</span>, <span class="hljs-string">&quot;--.&quot;</span>: <span class="hljs-string">&quot;G&quot;</span>,<br>    <span class="hljs-string">&quot;....&quot;</span>: <span class="hljs-string">&quot;H&quot;</span>, <span class="hljs-string">&quot;..&quot;</span>: <span class="hljs-string">&quot;I&quot;</span>, <span class="hljs-string">&quot;.---&quot;</span>: <span class="hljs-string">&quot;J&quot;</span>, <span class="hljs-string">&quot;-.-&quot;</span>: <span class="hljs-string">&quot;K&quot;</span>, <span class="hljs-string">&quot;.-..&quot;</span>: <span class="hljs-string">&quot;L&quot;</span>, <span class="hljs-string">&quot;--&quot;</span>: <span class="hljs-string">&quot;M&quot;</span>, <span class="hljs-string">&quot;-.&quot;</span>: <span class="hljs-string">&quot;N&quot;</span>,<br>    <span class="hljs-string">&quot;---&quot;</span>: <span class="hljs-string">&quot;O&quot;</span>, <span class="hljs-string">&quot;.--．&quot;</span>: <span class="hljs-string">&quot;P&quot;</span>, <span class="hljs-string">&quot;--.-&quot;</span>: <span class="hljs-string">&quot;Q&quot;</span>, <span class="hljs-string">&quot;.-.&quot;</span>: <span class="hljs-string">&quot;R&quot;</span>, <span class="hljs-string">&quot;...&quot;</span>: <span class="hljs-string">&quot;S&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>: <span class="hljs-string">&quot;T&quot;</span>,<br>    <span class="hljs-string">&quot;..-&quot;</span>: <span class="hljs-string">&quot;U&quot;</span>, <span class="hljs-string">&quot;...-&quot;</span>: <span class="hljs-string">&quot;V&quot;</span>, <span class="hljs-string">&quot;.--&quot;</span>: <span class="hljs-string">&quot;W&quot;</span>, <span class="hljs-string">&quot;-..-&quot;</span>: <span class="hljs-string">&quot;X&quot;</span>, <span class="hljs-string">&quot;-.--&quot;</span>: <span class="hljs-string">&quot;Y&quot;</span>, <span class="hljs-string">&quot;--..&quot;</span>: <span class="hljs-string">&quot;Z&quot;</span>,<br><br>    <span class="hljs-string">&quot;-----&quot;</span>: <span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-string">&quot;.----&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;..---&quot;</span>: <span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-string">&quot;...--&quot;</span>: <span class="hljs-string">&quot;3&quot;</span>, <span class="hljs-string">&quot;....-&quot;</span>: <span class="hljs-string">&quot;4&quot;</span>,<br>    <span class="hljs-string">&quot;.....&quot;</span>: <span class="hljs-string">&quot;5&quot;</span>, <span class="hljs-string">&quot;-....&quot;</span>: <span class="hljs-string">&quot;6&quot;</span>, <span class="hljs-string">&quot;--...&quot;</span>: <span class="hljs-string">&quot;7&quot;</span>, <span class="hljs-string">&quot;---..&quot;</span>: <span class="hljs-string">&quot;8&quot;</span>, <span class="hljs-string">&quot;----.&quot;</span>: <span class="hljs-string">&quot;9&quot;</span>,<br><br>    <span class="hljs-string">&quot;.-.-.-&quot;</span>: <span class="hljs-string">&quot;.&quot;</span>, <span class="hljs-string">&quot;---...&quot;</span>: <span class="hljs-string">&quot;:&quot;</span>, <span class="hljs-string">&quot;--..--&quot;</span>: <span class="hljs-string">&quot;,&quot;</span>, <span class="hljs-string">&quot;-.-.-.&quot;</span>: <span class="hljs-string">&quot;;&quot;</span>, <span class="hljs-string">&quot;..--..&quot;</span>: <span class="hljs-string">&quot;?&quot;</span>,<br>    <span class="hljs-string">&quot;-...-&quot;</span>: <span class="hljs-string">&quot;=&quot;</span>, <span class="hljs-string">&quot;.----.&quot;</span>: <span class="hljs-string">&quot;&#x27;&quot;</span>, <span class="hljs-string">&quot;-..-.&quot;</span>: <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-string">&quot;-.-.--&quot;</span>: <span class="hljs-string">&quot;!&quot;</span>, <span class="hljs-string">&quot;-....-&quot;</span>: <span class="hljs-string">&quot;-&quot;</span>,<br>    <span class="hljs-string">&quot;..--.-&quot;</span>: <span class="hljs-string">&quot;_&quot;</span>, <span class="hljs-string">&quot;.-..-.&quot;</span>: <span class="hljs-string">&#x27;&quot;&#x27;</span>, <span class="hljs-string">&quot;-.--.&quot;</span>: <span class="hljs-string">&quot;(&quot;</span>, <span class="hljs-string">&quot;-.--.-&quot;</span>: <span class="hljs-string">&quot;)&quot;</span>, <span class="hljs-string">&quot;...-..-&quot;</span>: <span class="hljs-string">&quot;$&quot;</span>,<br>    <span class="hljs-string">&quot;....&quot;</span>: <span class="hljs-string">&quot;&amp;&quot;</span>, <span class="hljs-string">&quot;.--.-.&quot;</span>: <span class="hljs-string">&quot;@&quot;</span>, <span class="hljs-string">&quot;.-.-.&quot;</span>: <span class="hljs-string">&quot;+&quot;</span>,<br>&#125;<br><br>s1 = s.split(<span class="hljs-string">&quot; &quot;</span>)<br><span class="hljs-built_in">print</span>(s1[<span class="hljs-number">44</span>])<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(s1)):<br>    <span class="hljs-keyword">if</span> s1[i] == <span class="hljs-string">&quot;&quot;</span>:<br>        <span class="hljs-keyword">continue</span><br>    <span class="hljs-keyword">if</span> s1[i] == <span class="hljs-string">&#x27;----&#x27;</span>:<br>        <span class="hljs-built_in">print</span>(MorseList[<span class="hljs-string">&#x27;-----&#x27;</span>], end=<span class="hljs-string">&quot;&quot;</span>)<br>    <span class="hljs-keyword">else</span>:<br><br>        <span class="hljs-built_in">print</span>(MorseList[s1[i]], end=<span class="hljs-string">&quot;&quot;</span>)<br>    <span class="hljs-comment"># print(i, end=&quot;\t&quot;)</span><br>    <span class="hljs-comment"># print(s1[i])</span><br></code></pre></td></tr></table></figure><p>其中有些小问题， 都是我自己数麻了，没看清几个- , 还有空格多空了下，之类的，都处理了下</p><p>拿到了这个</p><p>UNICODE.102.108.97.103.123.109.48.114.115.101.99.111.100.101.119.79.1114.108.100.125.</p><p>然后  处理下 1114 ， 直接转换字符串即可</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171848924.png" alt="image-20211017184801844"></p><p>flag{m0rsecodewOrld}</p><h1 id="pig"><a href="#pig" class="headerlink" title="pig"></a>pig</h1><p>给了两张图片， 一张表，一张字符， 其实是猪圈密码，直接转换即可</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171849028.png" alt="image-20211017184941948"></p><p>转换成小写提交</p><p>flag{you_are_yyds!!}</p><h1 id="rsa"><a href="#rsa" class="headerlink" title="rsa"></a>rsa</h1><p>yafu 分解n , 然后直接  求d 即可</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202110171857102.png" alt="image-20211017185227241"></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span><br><span class="hljs-comment"># coding = utf-8</span><br>n=<span class="hljs-number">359477536337810507</span><br>e=<span class="hljs-number">65537</span><br><br><span class="hljs-keyword">import</span> libnum<br>p= <span class="hljs-number">629765021</span><br>q = <span class="hljs-number">570812167</span><br><br>d = libnum.invmod(e, (p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br><br><span class="hljs-built_in">print</span>(d)<br></code></pre></td></tr></table></figure><p>flag{250724295148129073}</p>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>ctf</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>样本分析1</title>
     <link href="/2021/10/13/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%901/"/>
     <url>/2021/10/13/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%901/</url>
@@ -263,9 +244,9 @@
     
     <tags>
       
-      <tag>study</tag>
-      
       <tag>逆向工程</tag>
+      
+      <tag>study</tag>
       
       <tag>样本分析</tag>
       
@@ -286,9 +267,9 @@
     
     <tags>
       
-      <tag>study</tag>
-      
       <tag>逆向工程</tag>
+      
+      <tag>study</tag>
       
     </tags>
     
@@ -354,73 +335,6 @@
       <tag>逆向工程</tag>
       
       <tag>ida</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>关于hexo主题fluid配置google_analytics的事故</title>
-    <link href="/2021/09/23/%E5%85%B3%E4%BA%8Ehexo%E4%B8%BB%E9%A2%98fluid%E9%85%8D%E7%BD%AEgoogle-analytics%E7%9A%84%E4%BA%8B%E6%95%85/"/>
-    <url>/2021/09/23/%E5%85%B3%E4%BA%8Ehexo%E4%B8%BB%E9%A2%98fluid%E9%85%8D%E7%BD%AEgoogle-analytics%E7%9A%84%E4%BA%8B%E6%95%85/</url>
-    
-    <content type="html"><![CDATA[<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>今天突然看到我的 hexo 博客统计， 然后去看了下  leancloud 后台，看到居然要我实名认证，我又是一阵难受， 然后打开 google analytics ， 仔细观察了一下， 我明明啥都填上去了， 但是访客量什么的全都是 0</p><h1 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h1><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202109232018839.png" alt="image-20210923201841766"></p><p>然后经过我的调试， 我突然发现， 我  gtag.js 访问的  id 和 官网给的 id 不一样， 我仔细观察才发现， 我好像把上面的 Tracking ID 和 下面的  媒体资源ID 整反了</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202109232020846.png" alt="image-20210923202036810"></p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202109232023276.png" alt="image-20210923202310206"></p><p>这里正确的资源媒体ID 应该是 G 开头的，  而 Tracking ID 我理解成了  数据流ID , 这里重新填的 就是数据流ID</p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202109232024864.png" alt="image-20210923202437816"></p><p>我太沙雕了…. </p><h1 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h1><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202109232025819.png" alt="image-20210923202542731"></p><p>最后重新出现用户访问， 我笑了起来</p>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>杂谈</tag>
-      
-      <tag>hexo</tag>
-      
-      <tag>blog</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>关于010edit以管理员方式运行的解决方法</title>
-    <link href="/2021/09/21/%E5%85%B3%E4%BA%8E010edit%E4%BB%A5%E7%AE%A1%E7%90%86%E5%91%98%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8C%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
-    <url>/2021/09/21/%E5%85%B3%E4%BA%8E010edit%E4%BB%A5%E7%AE%A1%E7%90%86%E5%91%98%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8C%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
-    
-    <content type="html"><![CDATA[<blockquote><p> 开设新分区  记录一些日常生活学习中遇到的小问题</p></blockquote><h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>010edit 绿色版， 在win10 上面运行时， 总是会打开 uac,  用户账户控制， 提示用户是否在此电脑上运行此程序， 我对这个弹窗不胜其烦… </p><p>而且最关键的问题是， 你通过 uac ，打开这个 010edit 之后， 你无法直接把文件直接将文件脱到窗口上，这让强迫症的我非常的难受，我tm直接寻找解决方法</p><p>参考：<a href="https://www.zhihu.com/question/27895048">https://www.zhihu.com/question/27895048</a></p><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202109211912254.png" alt="image-20210921191208172"></p><p>通过修改文件名称，直接解决这个问题，，， 好吧以上都是我东扯西扯，扯出来的废话</p><blockquote><p>把程序名称: 010Editor.exe    改成:  010Edito.exe </p></blockquote><h1 id="绿色版的小脚本"><a href="#绿色版的小脚本" class="headerlink" title="绿色版的小脚本"></a>绿色版的小脚本</h1><p>绿色版的话，有个脚本，我这边因为改了程序名称，所以脚本也要进行一个小小的修改</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs bash">@ECHO OFF&amp;(PUSHD <span class="hljs-string">&quot;%~DP0&quot;</span>)<br>IF NOT EXIST <span class="hljs-string">&quot;%ProgramW6432%&quot;</span> (ECHO 此为64位版 &amp;PING 127.1 /n 2 &gt;NUL&amp;EXIT)<br>(REG QUERY <span class="hljs-string">&quot;HKU\S-1-5-19&quot;</span>&gt;NUL 2&gt;&amp;1)||(reg add <span class="hljs-string">&quot;HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers&quot;</span> /f /v <span class="hljs-string">&quot;%~dp0010Edito.exe&quot;</span> /d <span class="hljs-string">&quot;~ RUNASADMIN&quot;</span> &gt;NUL 2&gt;NUL)<br>(REG QUERY <span class="hljs-string">&quot;HKU\S-1-5-19&quot;</span>&gt;NUL 2&gt;&amp;1)||(powershell -Command <span class="hljs-string">&quot;Start-Process &#x27;%~sdpnx0&#x27; -Verb RunAs&quot;</span> &amp;&amp;EXIT)<br><br>taskkill /F /IM assistant.exe &gt;NUL 2&gt;NUL<br>taskkill /F /IM 010Edito.exe &gt;NUL 2&gt;NUL<br><br>::注册激活信息（程序已破解）<br>::reg delete <span class="hljs-string">&quot;HKCU\SOFTWARE\SweetScape\010 Editor\CLASSES&quot;</span> /f &gt;NUL 2&gt;NUL<br>::reg add <span class="hljs-string">&quot;HKCU\Software\SweetScape\010 Editor&quot;</span> /f /v <span class="hljs-string">&quot;Name&quot;</span> /d <span class="hljs-string">&quot;AnyOne&quot;</span> &gt;NUL 2&gt;NUL<br>::reg add <span class="hljs-string">&quot;HKCU\Software\SweetScape\010 Editor&quot;</span> /f /v <span class="hljs-string">&quot;Password&quot;</span> /d <span class="hljs-string">&quot;249F-FBAC-E9C0-A536-3055&quot;</span> &gt;NUL 2&gt;NUL<br><br>::复制汉化的后台缓存配置文件<br>md <span class="hljs-string">&quot;%LocalAppData%\cache\myhelp&quot;</span>2&gt;NUL<br>md <span class="hljs-string">&quot;%AppData%\SweetScape-zh\010 Editor&quot;</span> 2&gt;NUL<br><span class="hljs-built_in">echo</span> f|copy /y <span class="hljs-string">&quot;%~dp0Data\010Editor.qhc&quot;</span> <span class="hljs-string">&quot;%LocalAppData%\cache\myhelp\&quot; &gt;NUL 2&gt;NUL</span><br><span class="hljs-string">echo f|copy /y &quot;</span>%~dp0Data\010Editor110.cfg<span class="hljs-string">&quot; &quot;</span>%AppData%\SweetScape-zh\010 Editor\&quot; &gt;NUL 2&gt;NUL<br><br>:Menu<br>ECHO.<br>ECHO 1、关联产品文件类型<br>ECHO 2、添加资源管理器右键 010 Editor 项<br>ECHO 3、删除资源管理器右键 010 Editor 项<br>IF EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> CHOICE /C 12 /N &gt;NUL 2&gt;NUL<br>IF EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> IF <span class="hljs-string">&quot;%ERRORLEVEL%&quot;</span>==<span class="hljs-string">&quot;3&quot;</span> GOTO RemoveMenu<br>IF EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> IF <span class="hljs-string">&quot;%ERRORLEVEL%&quot;</span>==<span class="hljs-string">&quot;2&quot;</span> GOTO AddMenu<br>IF EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> IF <span class="hljs-string">&quot;%ERRORLEVEL%&quot;</span>==<span class="hljs-string">&quot;1&quot;</span> GOTO Assoc<br>IF NOT EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> ECHO.&amp;SET /p choice=输入选项数字敲回车键：<br>IF NOT EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> IF NOT <span class="hljs-string">&quot;%choice%&quot;</span>==<span class="hljs-string">&quot;&quot;</span> SET choice=%choice:~0,1%<br>IF NOT EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> IF /I <span class="hljs-string">&quot;%choice%&quot;</span>==<span class="hljs-string">&quot;1&quot;</span> GOTO Assoc<br>IF NOT EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> IF /I <span class="hljs-string">&quot;%choice%&quot;</span>==<span class="hljs-string">&quot;2&quot;</span> GOTO AddMenu<br>IF NOT EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> IF /I <span class="hljs-string">&quot;%choice%&quot;</span>==<span class="hljs-string">&quot;3&quot;</span> GOTO RemoveMenu<br>IF NOT EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> ECHO.&amp;ECHO 输入无效 &amp;PAUSE&amp;CLS&amp;GOTO MENU<br><br>:Assoc<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\.1sc&quot;</span> /f /ve /d <span class="hljs-string">&quot;010 Editor.1sc&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\.bt&quot;</span> /f /ve /d <span class="hljs-string">&quot;010 Editor.bt&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\.hex&quot;</span> /f /ve /d <span class="hljs-string">&quot;010 Editor.hex&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\.s19&quot;</span> /f /ve /d <span class="hljs-string">&quot;010 Editor.srecords&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\.s28&quot;</span> /f /ve /d <span class="hljs-string">&quot;010 Editor.srecords&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\.s37&quot;</span> /f /ve /d <span class="hljs-string">&quot;010 Editor.srecords&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor&quot;</span> /f /ve /d <span class="hljs-string">&quot;010 Editor&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor\DefaultIcon&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot;,2&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor\shell\open\command&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot; \&quot;%%1\&quot;&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.1sc&quot;</span> /f /ve /d <span class="hljs-string">&quot;010 Editor Script File&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.1sc\DefaultIcon&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot;,3&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.1sc\shell\open\command&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot; \&quot;-script:%%1@1\&quot;&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.bt&quot;</span> /f /ve /d <span class="hljs-string">&quot;010 Editor Binary Template&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.bt\DefaultIcon&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot;,4&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.bt\shell\open\command&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot; \&quot;-template:%%1@1\&quot;&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.hex&quot;</span> /f /ve /d <span class="hljs-string">&quot;Intel Hex File&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.hex\DefaultIcon&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot;,2&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.hex\shell\open\command&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot; -import:\&quot;%%1\&quot;&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.srecords&quot;</span> /f /ve /d <span class="hljs-string">&quot;Motorola S-Records&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.srecords\DefaultIcon&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot;,2&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\010 Editor.srecords\shell\open\command&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot; -import:\&quot;%%1\&quot;&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\Applications\010Edito.EXE\shell\open\command&quot;</span> /f /ve /d <span class="hljs-string">&quot;\&quot;%~dp0010Edito.EXE\&quot; \&quot;%%1\&quot;&quot;</span> &gt;NUL 2&gt;NUL<br>ASSOC .=. &gt;NUL 2&gt;NUL<br>IF EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> ( <br>ECHO.&amp;ECHO 关联完成 &amp;TIMEOUT /t 2 &gt;NUL &amp; CLS &amp; GOTO MENU<br>) ELSE ( <br>ECHO.&amp;ECHO 关联完成，任意键返回 &amp;PAUSE&gt;NUL&amp;CLS&amp;GOTO MENU) <br><br>:AddMenu<br>regsvr32 /s shlext010x64.dll<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\*\shellex\ContextMenuHandlers\010 Editor Shell Extension&quot;</span> /f /ve /d <span class="hljs-string">&quot;&#123;792252D0-144F-11E1-BE50-0800200C9A66&#125;&quot;</span> &gt;NUL 2&gt;NUL<br>reg add <span class="hljs-string">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved&quot;</span> /f /v <span class="hljs-string">&quot;&#123;792252D0-144F-11E1-BE50-0800200C9A66&#125;&quot;</span> /d <span class="hljs-string">&quot;010 Editor Shell Extension&quot;</span> &gt;NUL 2&gt;NUL<br>IF EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> ( <br>ECHO.&amp;ECHO 添加完成 &amp;TIMEOUT /t 2 &gt;NUL &amp; CLS &amp; GOTO MENU<br>) ELSE ( <br>ECHO.&amp;ECHO 添加完成，任意键返回 &amp;PAUSE&gt;NUL&amp;CLS&amp;GOTO MENU) <br><br>:RemoveMenu<br>regsvr32 /s /u shlext010x64.dll<br>reg delete <span class="hljs-string">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions&quot;</span> /f &gt;NUL 2&gt;NUL<br>reg delete <span class="hljs-string">&quot;HKLM\SOFTWARE\Classes\*\shellex\ContextMenuHandlers\010 Editor Shell Extension&quot;</span> /f &gt;NUL 2&gt;NUL<br>IF EXIST <span class="hljs-string">&quot;%WinDir%\System32\CHOICE.exe&quot;</span> ( <br>ECHO.&amp;ECHO 删除完成 &amp;TIMEOUT /t 2 &gt;NUL &amp; CLS &amp; GOTO MENU<br>) ELSE ( <br>ECHO.&amp;ECHO 删除完成，任意键返回 &amp;PAUSE&gt;NUL&amp;CLS&amp;GOTO MENU) <br></code></pre></td></tr></table></figure><h1 id="感谢观看"><a href="#感谢观看" class="headerlink" title="感谢观看"></a>感谢观看</h1>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>杂谈</tag>
-      
-      <tag>win10</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>个人总结-短信轰炸漏洞挖掘</title>
-    <link href="/2021/08/29/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93-%E7%9F%AD%E4%BF%A1%E8%BD%B0%E7%82%B8%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
-    <url>/2021/08/29/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93-%E7%9F%AD%E4%BF%A1%E8%BD%B0%E7%82%B8%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</url>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p>first : 只要是没有人机验证的发送短信功能，即可尝试一下</p><h2 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a><strong>漏洞危害</strong></h2><p>对指定手机号实现任意轰炸</p><h2 id="漏洞详细说明"><a href="#漏洞详细说明" class="headerlink" title="漏洞详细说明"></a><strong>漏洞详细说明</strong></h2><p>这种漏洞的话, 只有项目或者大厂src收取， 不收则已，一收惊人。</p><p>这东西算中危,  而且ctf 的话，并不教这个</p><h2 id="来源"><a href="#来源" class="headerlink" title="来源"></a><strong>来源</strong></h2><ol><li><p>注册页面</p></li><li><p>登录页面</p></li><li><p>活动预约</p></li><li><p>其他账户信息敏感操作</p></li></ol><h2 id="复现方法"><a href="#复现方法" class="headerlink" title="复现方法"></a><strong>复现方法</strong></h2><p>复现步骤也很简单，就是把发送验证码的数据包重放一下，看是否能成功发送验证码， 重放一次发送一次</p><p>5分钟内发送50条以上信息(58src标准)</p><h2 id="进阶绕过"><a href="#进阶绕过" class="headerlink" title="进阶绕过"></a><strong>进阶绕过</strong></h2><p>部分短信轰炸限制绕过姿势:</p><ol><li><p>有的服务器是靠其他提交的参数识别这个手机号提交次数,  可以先使用自己的手机号，然后再使用随便一个手机号刷新这个参数， 然后就可以再次给自己的手机号发送短信验证</p></li><li><p>更改其他参数，     Count=1 ， time=xxxxx, 等。 都有几率绕过验证</p></li><li><p>遇到加密数据可以尝试逆向 Js 代码，解密出发送的内容              </p></li></ol><h2 id="修复方式"><a href="#修复方式" class="headerlink" title="修复方式"></a><strong>修复方式</strong></h2><p>增加 人机验证方式</p>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>study</tag>
-      
-      <tag>web</tag>
-      
-      <tag>逻辑漏洞</tag>
       
     </tags>
     
@@ -496,9 +410,9 @@
     
     <tags>
       
-      <tag>逆向工程</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>逆向工程</tag>
       
     </tags>
     
