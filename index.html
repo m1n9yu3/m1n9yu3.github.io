@@ -1,63 +1,95 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN" data-default-color-scheme=auto>
 
 
 
 <head>
   <meta charset="UTF-8">
-  <meta name="baidu-site-verification" content="code-lz3iJGzm1b" />
-  <meta name="google-site-verification" content="gQ_8lqZWXgBqV-9ZHqGU_rocgAcXAdcgvhqqlQJqcDY" />
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
   <meta name="author" content="m1n9yu3">
   <meta name="keywords" content="">
   
+    <meta property="og:type" content="website">
+<meta property="og:title" content="m1n9yu3&#39;blogs">
+<meta property="og:url" content="https://pwner.top/index.html">
+<meta property="og:site_name" content="m1n9yu3&#39;blogs">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="m1n9yu3">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
   <title>m1n9yu3&#39;blogs</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"pwner.top","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"5dac63ed8d142b1e88f43b3d6c765740","google":269323507,"gtag":"G-XKR7SBPB8Z","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null}}};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"pwner.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="m1n9yu3'blogs" type="application/atom+xml">
 </head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand"
-       href="/">&nbsp;<strong>m1n9yu3'blogs</strong>&nbsp;</a>
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -74,9 +106,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
-                首页
+                <span>首页</span>
               </a>
             </li>
           
@@ -86,9 +118,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                归档
+                <span>归档</span>
               </a>
             </li>
           
@@ -98,9 +130,21 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                标签
+                <span>标签</span>
               </a>
             </li>
           
@@ -110,35 +154,26 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
+                <span>关于</span>
               </a>
             </li>
           
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;</a>
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" href="javascript:">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
           </li>
         
       </ul>
@@ -146,34 +181,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/jiajiao.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Keep Passion on CyberSecurity">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="Keep Passion on CyberSecurity"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -185,23 +226,19 @@
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2025/01/17/2024%E6%98%A5%E7%A7%8B%E6%9D%AF-%E5%86%AC%E5%AD%A3%E8%B5%9B/">2024 春秋杯冬季赛</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2025/01/17/2024%E6%98%A5%E7%A7%8B%E6%9D%AF-%E5%86%AC%E5%AD%A3%E8%B5%9B/">
-          
-          
-            
-          
-          reveasyre使用固定的值做随机数种子，但不能在调试环境中做，需要先运行程序再附加，再提取数据。
-koOhrc4 加密，但是减法
-提取出 key
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667
+        <a href="/2025/01/17/2024%E6%98%A5%E7%A7%8B%E6%9D%AF-%E5%86%AC%E5%AD%A3%E8%B5%9B/" target="_self">
+          2024 春秋杯冬季赛-第一天
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/01/17/2024%E6%98%A5%E7%A7%8B%E6%9D%AF-%E5%86%AC%E5%AD%A3%E8%B5%9B/" target="_self">
+        <div>
+          reveasyre使用固定的值做随机数种子，但不能在调试环境中做，需要先运行程序再附加，再提取数据。 koOhrc4 加密，但是减法 提取出 key 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -217,9 +254,9 @@ koOhrc4 加密，但是减法
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ctf/">ctf</a>
+              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
             
-              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">逆向工程</a>
+              <a href="/tags/ctf/">#ctf</a>
             
           </div>
         
@@ -231,26 +268,19 @@ koOhrc4 加密，但是减法
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2023/08/14/NepCTF2023-%E4%B9%9D%E9%BE%99%E6%8B%89%E6%A3%BAwp/">NepCTF2023-九龙拉棺wp</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/08/14/NepCTF2023-%E4%B9%9D%E9%BE%99%E6%8B%89%E6%A3%BAwp/">
-          
-          
-            
-          
-          综合难度: easy考点:多线程，父子进程，共享内存，硬件断点检测，int3断点反调试，xtea加密算法.
-出题思路/解题思路/杂记:本题使用了8个线程+1个新的进程，实现了flag字符串的验证。
-
-看似是 8 个线程，实则8个线程均通过一个变量控制，所以使用的是一个线程。只要跟随变量(nCurLevel)的变化，走到相应的线程，即可了解程序逻辑。
-
-
-4个线程用来解密子进程exe,.分别使用 R
+        <a href="/2023/08/14/NepCTF2023-%E4%B9%9D%E9%BE%99%E6%8B%89%E6%A3%BAwp/" target="_self">
+          NepCTF2023-九龙拉棺wp
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/08/14/NepCTF2023-%E4%B9%9D%E9%BE%99%E6%8B%89%E6%A3%BAwp/" target="_self">
+        <div>
+          综合难度: easy考点:多线程，父子进程，共享内存，硬件断点检测，int3断点反调试，xtea加密算法. 出题思路/解题思路/杂记:本题使用了8个线程+1个新的进程，实现了flag字符串的验证。  看似是 8 个线程，实则8个线程均通过一个变量控制，所以使用的是一个线程。只要跟随变量(nCurLevel)的变化，走到相应的线程，即可了解程序逻辑。   4个线程用来解密子进程exe,.分别使用 R
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -266,15 +296,15 @@ koOhrc4 加密，但是减法
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">逆向工程</a>
+              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
             
-              <a href="/tags/ida/">ida</a>
+              <a href="/tags/ida/">#ida</a>
             
-              <a href="/tags/%E6%9D%82%E8%AE%B0/">杂记</a>
+              <a href="/tags/%E6%9D%82%E8%AE%B0/">#杂记</a>
             
-              <a href="/tags/%E5%87%BA%E9%A2%98/">出题</a>
+              <a href="/tags/%E5%87%BA%E9%A2%98/">#出题</a>
             
-              <a href="/tags/writeup/">writeup</a>
+              <a href="/tags/writeup/">#writeup</a>
             
           </div>
         
@@ -286,35 +316,19 @@ koOhrc4 加密，但是减法
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2022/05/10/2022%E6%98%A5%E7%A7%8B%E6%9D%AF-%E6%98%A5%E5%AD%A3%E8%B5%9B-RetroRegisterWp/">2022春秋杯-春季赛-RetroRegisterWp</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/05/10/2022%E6%98%A5%E7%A7%8B%E6%9D%AF-%E6%98%A5%E5%AD%A3%E8%B5%9B-RetroRegisterWp/">
-          
-          
-            
-          
-          作业文件见: https://github.com/m1n9yu3/2022chunqiubei_RetroRegister
-题目逻辑分析一个重启验证。
-程序流程为, 
-
-用户输入用户名和密码
-进入 CheckInput 中检查输入
-判断输入是否符合要求， 写 reg.dat 文件
-
-重启程序时
-
-读取 reg.dat 文件 ReadRegData
-
-验证 reg.dat 文件是否符合逻辑 
-
-
-
+        <a href="/2022/05/10/2022%E6%98%A5%E7%A7%8B%E6%9D%AF-%E6%98%A5%E5%AD%A3%E8%B5%9B-RetroRegisterWp/" target="_self">
+          2022春秋杯-春季赛-RetroRegisterWp
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/05/10/2022%E6%98%A5%E7%A7%8B%E6%9D%AF-%E6%98%A5%E5%AD%A3%E8%B5%9B-RetroRegisterWp/" target="_self">
+        <div>
+          作业文件见: https://github.com/m1n9yu3/2022chunqiubei_RetroRegister 题目逻辑分析一个重启验证。 程序流程为,   用户输入用户名和密码 进入 CheckInput 中检查输入 判断输入是否符合要求， 写 reg.dat 文件  重启程序时  读取 reg.dat 文件 ReadRegData  验证 reg.dat 文件是否符合逻辑
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -330,9 +344,9 @@ koOhrc4 加密，但是减法
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ctf/">ctf</a>
+              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
             
-              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">逆向工程</a>
+              <a href="/tags/ctf/">#ctf</a>
             
           </div>
         
@@ -344,28 +358,19 @@ koOhrc4 加密，但是减法
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2021/11/25/2021%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E5%88%9D%E8%B5%9B-%E4%B8%A4%E9%81%93%E7%AE%80%E5%8D%95re/">2021西湖论剑线上初赛-两道简单re</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/25/2021%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E5%88%9D%E8%B5%9B-%E4%B8%A4%E9%81%93%E7%AE%80%E5%8D%95re/">
-          
-          
-            
-          
-          
-水了一道题，自我感觉良好，没有像去年那样爆零了
-
-TacticalArmedida 载入
-
-我们可以知道， 由 sub_4011f0 动态生成指令， 然后执行， 加密 输入的字符串
-
-动态调试提取指令
-12345678910111213141516171819202122232425262728293031323334353600644D68 | 81E9 D2965A7E           
+        <a href="/2021/11/25/2021%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E5%88%9D%E8%B5%9B-%E4%B8%A4%E9%81%93%E7%AE%80%E5%8D%95re/" target="_self">
+          2021西湖论剑线上初赛-两道简单re
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/11/25/2021%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E7%BA%BF%E4%B8%8A%E5%88%9D%E8%B5%9B-%E4%B8%A4%E9%81%93%E7%AE%80%E5%8D%95re/" target="_self">
+        <div>
+          水了一道题，自我感觉良好，没有像去年那样爆零了  TacticalArmedida 载入  我们可以知道， 由 sub_4011f0 动态生成指令， 然后执行， 加密 输入的字符串  动态调试提取指令 12345678910111213141516171819202122232425262728293031323334353600644D68 | 81E9 D2965A7E
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -381,9 +386,9 @@ TacticalArmedida 载入
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ctf/">ctf</a>
+              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
             
-              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">逆向工程</a>
+              <a href="/tags/ctf/">#ctf</a>
             
           </div>
         
@@ -395,34 +400,19 @@ TacticalArmedida 载入
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2021/11/25/ctfshow-png%E9%9A%90%E5%86%99%E5%85%A5%E9%97%A8/">ctfshow_png隐写入门</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/25/ctfshow-png%E9%9A%90%E5%86%99%E5%85%A5%E9%97%A8/">
-          
-          
-            
-          
-          
-ctfshow图片隐写入门赛
-
-文件名称St4rt_fr0m_th1s_5tr1ng
-图片内包含Th1s_i5_s0_34sy!!!
-exif 隐写A_k3y_1n_exif
-
-第一张图片尾部HexEditor_wi11_b3_he1pfu1
-
-分离图片得到He110_I_4m_Tw0_PieNG
-
-高度改成 0x600 得到Pn9_He1gh7_6e_ch4ng3d
-
-lsb最低位隐写
-str
+        <a href="/2021/11/25/ctfshow-png%E9%9A%90%E5%86%99%E5%85%A5%E9%97%A8/" target="_self">
+          ctfshow_png隐写入门
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/11/25/ctfshow-png%E9%9A%90%E5%86%99%E5%85%A5%E9%97%A8/" target="_self">
+        <div>
+          ctfshow图片隐写入门赛  文件名称St4rt_fr0m_th1s_5tr1ng 图片内包含Th1s_i5_s0_34sy!!! exif 隐写A_k3y_1n_exif  第一张图片尾部HexEditor_wi11_b3_he1pfu1  分离图片得到He110_I_4m_Tw0_PieNG  高度改成 0x600 得到Pn9_He1gh7_6e_ch4ng3d  lsb最低位隐写 str
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -438,11 +428,11 @@ str
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ctf/">ctf</a>
+              <a href="/tags/ctf/">#ctf</a>
             
-              <a href="/tags/misc/">misc</a>
+              <a href="/tags/misc/">#misc</a>
             
-              <a href="/tags/png/">png</a>
+              <a href="/tags/png/">#png</a>
             
           </div>
         
@@ -454,24 +444,19 @@ str
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2021/11/13/2021%E6%B7%B1%E8%82%B2%E6%9D%AFwp/">2021深育杯线上wp</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/13/2021%E6%B7%B1%E8%82%B2%E6%9D%AFwp/">
-          
-          
-            
-          
-          签到公众号回复 签到
-Press该程序实现了一个 braninfuck  多了一个符号 *  
-通过跟踪数据流，我们可以拿到算法逻辑
-
-12345678910111213141516171819202122232425262728293031分析记录:输入 111111111 之后反馈的结果初始:31  a0  00  6f  50  2b  50  2d  5第一轮:31  cd  50   9
+        <a href="/2021/11/13/2021%E6%B7%B1%E8%82%B2%E6%9D%AFwp/" target="_self">
+          2021深育杯线上wp
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/11/13/2021%E6%B7%B1%E8%82%B2%E6%9D%AFwp/" target="_self">
+        <div>
+          签到公众号回复 签到 Press该程序实现了一个 braninfuck  多了一个符号 *   通过跟踪数据流，我们可以拿到算法逻辑  12345678910111213141516171819202122232425262728293031分析记录:输入 111111111 之后反馈的结果初始:31  a0  00  6f  50  2b  50  2d  5第一轮:31  cd  50   9
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -487,9 +472,9 @@ Press该程序实现了一个 braninfuck  多了一个符号 *
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ctf/">ctf</a>
+              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
             
-              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">逆向工程</a>
+              <a href="/tags/ctf/">#ctf</a>
             
           </div>
         
@@ -501,31 +486,19 @@ Press该程序实现了一个 braninfuck  多了一个符号 *
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2021/11/08/2020%E7%BD%91%E9%BC%8E%E6%9D%AF%E9%9D%92%E9%BE%99%E7%BB%84-re-signal/">2020网鼎杯青龙组_re_signal</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/08/2020%E7%BD%91%E9%BC%8E%E6%9D%AF%E9%9D%92%E9%BE%99%E7%BB%84-re-signal/">
-          
-          
-            
-          
-          
-2020网鼎杯-青龙组-reverse-signal 的两种解法
-
-程序分析ida 载入, 符号保留了
-
-
-我们可以看出是个  vm 
-因为这里 vm的逻辑特别简单， 所以我们可以利用 angr 自动化逆向, 直接跑出答案， 也可以手动分析vm指令， 得到答案
-解法1: angr自动化
-我在学习 angr 的时候遇到了一点问题， 在此记录下来
-
-编写过程12345678910import ang
+        <a href="/2021/11/08/2020%E7%BD%91%E9%BC%8E%E6%9D%AF%E9%9D%92%E9%BE%99%E7%BB%84-re-signal/" target="_self">
+          2020网鼎杯青龙组_re_signal
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/11/08/2020%E7%BD%91%E9%BC%8E%E6%9D%AF%E9%9D%92%E9%BE%99%E7%BB%84-re-signal/" target="_self">
+        <div>
+          2020网鼎杯-青龙组-reverse-signal 的两种解法  程序分析ida 载入, 符号保留了   我们可以看出是个  vm  因为这里 vm的逻辑特别简单， 所以我们可以利用 angr 自动化逆向, 直接跑出答案， 也可以手动分析vm指令， 得到答案 解法1: angr自动化 我在学习 angr 的时候遇到了一点问题， 在此记录下来  编写过程12345678910import ang
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -541,13 +514,13 @@ Press该程序实现了一个 braninfuck  多了一个符号 *
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ctf/">ctf</a>
+              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
             
-              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">逆向工程</a>
+              <a href="/tags/ctf/">#ctf</a>
             
-              <a href="/tags/angr/">angr</a>
+              <a href="/tags/angr/">#angr</a>
             
-              <a href="/tags/vm/">vm</a>
+              <a href="/tags/vm/">#vm</a>
             
           </div>
         
@@ -559,28 +532,19 @@ Press该程序实现了一个 braninfuck  多了一个符号 *
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2021/11/07/vmware%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8%E6%9C%BA%E5%99%A8/">vmware命令行方式启动机器</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/07/vmware%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8%E6%9C%BA%E5%99%A8/">
-          
-          
-            
-          
-          
-突然发现 vmware 拥有 命令行管理虚拟机的能力，遂进行学习(水文章)
-
-first我们要知道 vmware的命令行文件在哪  ， 通过查找官方文档我们知道在
-1C:\Program Files (x86)\VMware\VMware Workstation\vmware.exe
-
-这里
-然后 命令格式为
-1vmware.exe [n  x  X  t  q]   要管理的虚拟机vmx完整路
+        <a href="/2021/11/07/vmware%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8%E6%9C%BA%E5%99%A8/" target="_self">
+          vmware命令行方式启动机器
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/11/07/vmware%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8%E6%9C%BA%E5%99%A8/" target="_self">
+        <div>
+          突然发现 vmware 拥有 命令行管理虚拟机的能力，遂进行学习(水文章)  first我们要知道 vmware的命令行文件在哪  ， 通过查找官方文档我们知道在 1C:\Program Files (x86)\VMware\VMware Workstation\vmware.exe  这里 然后 命令格式为 1vmware.exe [n  x  X  t  q]   要管理的虚拟机vmx完整路
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -596,9 +560,9 @@ first我们要知道 vmware的命令行文件在哪  ， 通过查找官方文�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a>
+              <a href="/tags/%E6%9D%82%E8%B0%88/">#杂谈</a>
             
-              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">#自动化</a>
             
           </div>
         
@@ -610,30 +574,19 @@ first我们要知道 vmware的命令行文件在哪  ， 通过查找官方文�
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2021/11/07/xctf-pwn-%E5%85%A5%E9%97%A8/">xctf_pwn_入门</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/11/07/xctf-pwn-%E5%85%A5%E9%97%A8/">
-          
-          
-            
-          
-          
-尝试使用 单纯的底层库 挑战 xctf pwn 的入门题目
-
-使用库:
-
-socket
-threading
-
-getshellida 打开， 发现 直接调用了 system(“/bin/sh”)   直接反弹了 shell
-这里直接抄了一段 python 模拟 nc 的代码
-1234567891011121314151617181920212223242526#!/usr/bin/python3
+        <a href="/2021/11/07/xctf-pwn-%E5%85%A5%E9%97%A8/" target="_self">
+          xctf_pwn_入门
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/11/07/xctf-pwn-%E5%85%A5%E9%97%A8/" target="_self">
+        <div>
+          尝试使用 单纯的底层库 挑战 xctf pwn 的入门题目  使用库:  socket threading  getshellida 打开， 发现 直接调用了 system(“/bin/sh”)   直接反弹了 shell 这里直接抄了一段 python 模拟 nc 的代码 1234567891011121314151617181920212223242526#!/usr/bin/python3
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -649,11 +602,11 @@ getshellida 打开， 发现 直接调用了 system(“/bin/sh”)   直接反�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ctf/">ctf</a>
+              <a href="/tags/ctf/">#ctf</a>
             
-              <a href="/tags/pwn/">pwn</a>
+              <a href="/tags/pwn/">#pwn</a>
             
-              <a href="/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">栈溢出</a>
+              <a href="/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">#栈溢出</a>
             
           </div>
         
@@ -665,27 +618,19 @@ getshellida 打开， 发现 直接调用了 system(“/bin/sh”)   直接反�
     
     
     <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
+      <h2 class="index-header">
         
-        <a href="/2021/10/30/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%902/">样本分析2</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/10/30/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%902/">
-          
-          
-            
-          
-          
-本文首发于 52pojie : https://www.52pojie.cn/thread-1536030-1-1.html
-
-详细分析程序流程大概是:
-start -&gt;  main  
-main 函数有五个动作
-权限提升 如果 windows 版本在 6.0 以上，就不执行提权
-1234567891011121314151617181920212223242526272829303132
+        <a href="/2021/10/30/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%902/" target="_self">
+          样本分析2
         </a>
-      </p>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/10/30/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%902/" target="_self">
+        <div>
+          本文首发于 52pojie : https://www.52pojie.cn/thread-1536030-1-1.html  详细分析程序流程大概是: start -&gt;  main   main 函数有五个动作 权限提升 如果 windows 版本在 6.0 以上，就不执行提权 1234567891011121314151617181920212223242526272829303132
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -701,13 +646,13 @@ main 函数有五个动作
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">逆向工程</a>
+              <a href="/tags/study/">#study</a>
             
-              <a href="/tags/study/">study</a>
+              <a href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">#逆向工程</a>
             
-              <a href="/tags/ida/">ida</a>
+              <a href="/tags/ida/">#ida</a>
             
-              <a href="/tags/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/">样本分析</a>
+              <a href="/tags/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/">#样本分析</a>
             
           </div>
         
@@ -733,7 +678,7 @@ main 函数有五个动作
     
 
     
-      <a id="scroll-top-button" href="#" role="button">
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
         <i class="iconfont icon-arrowup" aria-hidden="true"></i>
       </a>
     
@@ -752,35 +697,36 @@ main 函数有五个动作
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
   
-
   
-</footer>
-
-
-  <!-- SCRIPTS -->
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -791,13 +737,28 @@ main 函数有五个动作
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
 
 
   
@@ -806,109 +767,22 @@ main 函数有五个动作
 
 
 
-  
-
-
-
-
-
-
-
-
-
-  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
-
-
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
-
-
 
   <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/local-search.xml";
-      $('#local-search-input').on('click', function() {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      });
-      $('#modalSearch').on('shown.bs.modal', function() {
-        $('#local-search-input').focus();
-      });
-    })()
-  </script>
 
 
 
 
 
-
-
-
-
-
-
-
-  
-    <!-- Baidu Analytics -->
-    <script defer>
-      var _hmt = _hmt || [];
-      (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?5dac63ed8d142b1e88f43b3d6c765740";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-        console.log(s)
-      })();
-    </script>
-  
-
-  
-    <!-- Google Analytics -->
-    <script defer>
-      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
-      ga.l = +new Date;
-      ga('create', '269323507', 'auto');
-      ga('send', 'pageview');
-    </script>
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-  
-
-  
-    <!-- Google gtag.js -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XKR7SBPB8Z"></script>
-    <script defer>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XKR7SBPB8Z');
-    </script>
-  
-
-  
-
-  
-
-  
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
